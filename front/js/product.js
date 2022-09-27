@@ -9,3 +9,9 @@ console.log(urlSearchParams);
 //récupérer la chaine de caractère derrière le id de mon Url
 const id = urlSearchParams.get("id");
 console.log(id);
+
+//affichage du produit qui a été sélectionné par l'id par fetch
+//ajouter la valeur de l'id à la fin de l'Url
+let informationUnObjet = fetch(`http://localhost:3000/api/products/${_id}`)
+.then(response => reponse1.json())
+console.log(reponse1)
