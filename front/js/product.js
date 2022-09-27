@@ -12,6 +12,6 @@ console.log(id);
 
 //affichage du produit qui a été sélectionné par l'id par fetch
 //ajouter la valeur de l'id à la fin de l'Url
-let informationUnObjet = fetch(`http://localhost:3000/api/products/${_id}`)
-.then(response => reponse1.json())
-console.log(reponse1)
+let informationUnObjet = fetch(`http://localhost:3000/api/products/${id}`)
+.then(response => response.json())
+console.log(informationUnObjet)
