@@ -13,5 +13,17 @@ console.log(id);
 //affichage du produit qui a été sélectionné par l'id par fetch
 //ajouter la valeur de l'id à la fin de l'Url
 let informationUnObjet = fetch(`http://localhost:3000/api/products/${id}`)
-.then(response => response.json())
-console.log(informationUnObjet)
+.then(function (response) {
+    return response.json()
+})
+.then(function (data) {
+    console.log(data)
+})
+
+
+const positionImage = document.querySelector(".item__img ");
+console.log(positionImage);
+
+const structureImage = `<img src=${informationUnObjet.imageUrl}> `;
+
+positionImage.innerHTML = structureImage;
