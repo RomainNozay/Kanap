@@ -56,4 +56,40 @@ positionTitrePage.innerText = structureTitrePage;
 
 positionCouleur.innerHTML = structureCouleur;
 
+
+//Récupération des données sélectionnées par l'utilisateur
+
+//sélection de l'ID du formulaire
+const menuCouleur = document.querySelector("#colors");
+const menuQuantite = document.querySelector(".item__content__settings__quantity")
+
+
+//Sélection du bouton ajouter au panier
+const boutonPanier = document.querySelector("#addToCart");
+console.log(boutonPanier);
+
+//écouter le bouton et envoyer le panier
+boutonPanier.addEventListener("click", (event)=>{
+  event.preventDefault();  
+
+
+//Mettre choix utilisateur dans un variable
+const choixCouleur = menuCouleur.value;
+const choixQuantite = menuQuantite.name;
+
+
+  // Récupération des valeurs du formulaire sous forme de tableau clé/valeur (objet)
+let ChoixUtilisateur = {
+    _id: id,
+    image: data.imageUrl,
+    option_Couleur: choixCouleur,
+    option_Quantite: choixQuantite,
+    prix: data.price,
+    nom: data.name,
+}
+console.log(ChoixUtilisateur);
+});
+
+
+
 })
