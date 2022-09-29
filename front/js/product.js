@@ -18,7 +18,7 @@ let informationUnObjet = fetch(`http://localhost:3000/api/products/${id}`)
 })
 .then(function (data) {
     console.log(data)
-})
+
 
 
 const positionImage = document.querySelector(".item__img ");
@@ -27,3 +27,4 @@ console.log(positionImage);
 const structureImage = `<img src=${data.imageUrl}> `;
 
 positionImage.innerHTML = structureImage;
+})
