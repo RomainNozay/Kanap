@@ -30,7 +30,6 @@ const positionTitrePage = document.querySelector("title");
 
 const positionCouleur = document.querySelector("#colors");
 
-
 //Contenu de l'élément dynamique
 const structureImage = `<img src=${data.imageUrl}> `;
 const structureTitre = `<h1>${data.name}</h1>`;
@@ -53,9 +52,8 @@ positionTitre.innerHTML = structureTitre;
 positionPrix.innerText = structurePrix;
 positionDescription.innerHTML = structureDescription;
 positionTitrePage.innerText = structureTitrePage;
-
-positionCouleur.innerHTML = structureCouleur;
-
+positionCouleur.innerHTML += structureCouleur;
+//le '+' ici permet de conserver le svp,choisissez une couleur
 
 //Récupération des données sélectionnées par l'utilisateur
 
