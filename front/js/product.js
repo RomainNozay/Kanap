@@ -20,21 +20,26 @@ let informationUnObjet = fetch(`http://localhost:3000/api/products/${id}`)
     console.log(data)
 
 
-
+//Choix de l'endroit ou positionner l'élément dynamique
 const positionImage = document.querySelector(".item__img ");
 console.log(positionImage);
 const positionTitre = document.querySelector("#title");
 const positionPrix = document.querySelector("#price");
 const positionDescription = document.querySelector("#description");
+const positionTitrePage = document.querySelector("title");
 
+//Contenu de l'élément dynamique
 const structureImage = `<img src=${data.imageUrl}> `;
 const structureTitre = `<h1>${data.name}</h1>`;
 const structurePrix = `${data.price}`;
 const structureDescription = `<p>${data.description}</p>`;
+const structureTitrePage = `${data.name}`;
 
 
+//Injection du contenu dynamique
 positionImage.innerHTML = structureImage;
 positionTitre.innerHTML = structureTitre;
 positionPrix.innerText = structurePrix;
 positionDescription.innerHTML = structureDescription;
+positionTitrePage.innerText = structureTitrePage;
 })
