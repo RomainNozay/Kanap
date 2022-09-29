@@ -29,12 +29,12 @@ const positionDescription = document.querySelector("#description");
 
 const structureImage = `<img src=${data.imageUrl}> `;
 const structureTitre = `<h1>${data.name}</h1>`;
-const structurePrix = `<p>${data.price}</p>`;
+const structurePrix = `${data.price}`;
 const structureDescription = `<p>${data.description}</p>`;
 
 
 positionImage.innerHTML = structureImage;
 positionTitre.innerHTML = structureTitre;
-positionPrix.innerHTML = structurePrix;
+positionPrix.innerText = structurePrix;
 positionDescription.innerHTML = structureDescription;
 })
