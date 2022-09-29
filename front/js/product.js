@@ -61,7 +61,7 @@ positionCouleur.innerHTML = structureCouleur;
 
 //sélection de l'ID du formulaire
 const menuCouleur = document.querySelector("#colors");
-const menuQuantite = document.querySelector(".item__content__settings__quantity")
+const menuQuantite = document.querySelector("#quantity")
 
 
 //Sélection du bouton ajouter au panier
@@ -75,7 +75,7 @@ boutonPanier.addEventListener("click", (event)=>{
 
 //Mettre choix utilisateur dans un variable
 const choixCouleur = menuCouleur.value;
-const choixQuantite = menuQuantite.name;
+const choixQuantite = menuQuantite.value;
 
 
   // Récupération des valeurs du formulaire sous forme de tableau clé/valeur (objet)
