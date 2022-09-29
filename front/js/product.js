@@ -28,6 +28,9 @@ const positionPrix = document.querySelector("#price");
 const positionDescription = document.querySelector("#description");
 const positionTitrePage = document.querySelector("title");
 
+const positionCouleur = document.querySelector("#colors");
+
+
 //Contenu de l'élément dynamique
 const structureImage = `<img src=${data.imageUrl}> `;
 const structureTitre = `<h1>${data.name}</h1>`;
@@ -36,10 +39,21 @@ const structureDescription = `<p>${data.description}</p>`;
 const structureTitrePage = `${data.name}`;
 
 
+
+//Création d'une boucle 'for' pour remplir la zone de sélection de la couleur (utilisation de j à la place de i car déjà utilisé)
+let structureCouleur = [];
+for (i = 0; i < data.colors.length; i++) {
+    structureCouleur = structureCouleur +
+   `<option value="${data.colors[i]}">${data.colors[i]}</option>`;
+}
+
 //Injection du contenu dynamique
 positionImage.innerHTML = structureImage;
 positionTitre.innerHTML = structureTitre;
 positionPrix.innerText = structurePrix;
 positionDescription.innerHTML = structureDescription;
 positionTitrePage.innerText = structureTitrePage;
+
+positionCouleur.innerHTML = structureCouleur;
+
 })
