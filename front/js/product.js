@@ -1,93 +1,94 @@
-// récupération de la chaine de requête dans l'Url
-const queryString_url_id = window.location.search;
-console.log(queryString_url_id);
 
-// extraire id avec UrlSearchParams
-const urlSearchParams = new URLSearchParams(queryString_url_id);
-console.log(urlSearchParams);
+// I) Récupération de l'id dans L'url.
 
-//récupérer la chaine de caractère derrière le id de mon Url
-const id = urlSearchParams.get("id");
-console.log(id);
+    // 1) Récupération de la chaine de requête dans l'Url.
+    const queryString_url_id = window.location.search;
+    console.log(queryString_url_id);
 
-//affichage du produit qui a été sélectionné par l'id par fetch
-//ajouter la valeur de l'id à la fin de l'Url
-let informationUnObjet = fetch(`http://localhost:3000/api/products/${id}`)
-.then(function (response) {
+    // 2) Extraction de l'id de la chaîne de requête avec UrlSearchParams.
+    const urlSearchParams = new URLSearchParams(queryString_url_id);
+    console.log(urlSearchParams);
+
+    // 3) Récupération de la chaine de caractère derrière le id de mon Url.
+    const id = urlSearchParams.get("id");
+    console.log(id);
+
+// II) Extraction des informations d'un seul produit pour remplir la page.
+
+    // 1) Utilisation d'une requête fetch (get) pour aller récupérer les paires "clé-valeur" seulement d'un canapé en ajoutant son id (de manière dynamique) à la fin de la requête. 
+    let informationUnObjet = fetch(`http://localhost:3000/api/products/${id}`)
+    .then(function (response) {
     return response.json()
-})
-.then(function (data) {
+    })
+    .then(function (data) {
     console.log(data)
 
 
-//Choix de l'endroit ou positionner l'élément dynamique
-const positionImage = document.querySelector(".item__img ");
-console.log(positionImage);
-const positionTitre = document.querySelector("#title");
-const positionPrix = document.querySelector("#price");
-const positionDescription = document.querySelector("#description");
-const positionTitrePage = document.querySelector("title");
+    // 2) Choix de l'endroit ou positionner l'élément dynamique
+    const positionImage = document.querySelector(".item__img ");
+    const positionTitre = document.querySelector("#title");
+    const positionPrix = document.querySelector("#price");
+    const positionDescription = document.querySelector("#description");
+    const positionTitrePage = document.querySelector("title");
+    const positionCouleur = document.querySelector("#colors");
 
-const positionCouleur = document.querySelector("#colors");
+    // 3) Contenu de l'élément dynamique
+    const structureImage = `<img src=${data.imageUrl}> `;
+    const structureTitre = `<h1>${data.name}</h1>`;
+    const structurePrix = `${data.price}`;
+    const structureDescription = `<p>${data.description}</p>`;
+    const structureTitrePage = `${data.name}`;
 
-//Contenu de l'élément dynamique
-const structureImage = `<img src=${data.imageUrl}> `;
-const structureTitre = `<h1>${data.name}</h1>`;
-const structurePrix = `${data.price}`;
-const structureDescription = `<p>${data.description}</p>`;
-const structureTitrePage = `${data.name}`;
-
-
-
-//Création d'une boucle 'for' pour remplir la zone de sélection de la couleur (utilisation de j à la place de i car déjà utilisé)
-let structureCouleur = [];
-for (i = 0; i < data.colors.length; i++) {
+    // 3.1) Création d'une boucle 'for' pour remplir la zone de sélection de la couleur (utilisation de j à la place de i car déjà utilisé)
+    let structureCouleur = [];
+    for (i = 0; i < data.colors.length; i++) {
     structureCouleur = structureCouleur +
-   `<option value="${data.colors[i]}">${data.colors[i]}</option>`;
-}
+    //écriture alternative de structureCouleur +=.
+    `<option value="${data.colors[i]}">${data.colors[i]}</option>`;
+    }
 
-//Injection du contenu dynamique
-positionImage.innerHTML = structureImage;
-positionTitre.innerHTML = structureTitre;
-positionPrix.innerText = structurePrix;
-positionDescription.innerHTML = structureDescription;
-positionTitrePage.innerText = structureTitrePage;
-positionCouleur.innerHTML += structureCouleur;
-//le '+' ici permet de conserver le svp,choisissez une couleur
+    // 4) Injection du contenu dynamique.
+    positionImage.innerHTML = structureImage;
+    positionTitre.innerHTML = structureTitre;
+    positionPrix.innerText = structurePrix;
+    positionDescription.innerHTML = structureDescription;
+    positionTitrePage.innerText = structureTitrePage;
+    positionCouleur.innerHTML += structureCouleur;
+                        //le '+' ici permet de conserver le "svp,choisissez une couleur".
 
-//Récupération des données sélectionnées par l'utilisateur
+// III) Récupération des données sélectionnées par l'utilisateur.
 
-//sélection de l'ID du formulaire
-const menuCouleur = document.querySelector("#colors");
-const menuQuantite = document.querySelector("#quantity")
+    // 1) Sélection de la source des informations intéractives.
+    const menuCouleur = document.querySelector("#colors");
+    const menuQuantite = document.querySelector("#quantity");
+    
 
+    // 2) Sélection du bouton ajouter au panier.
+    const boutonPanier = document.querySelector("#addToCart");
+    console.log(boutonPanier);
 
-//Sélection du bouton ajouter au panier
-const boutonPanier = document.querySelector("#addToCart");
-console.log(boutonPanier);
-
-//écouter le bouton et envoyer le panier
-boutonPanier.addEventListener("click", (event)=>{
-  event.preventDefault();  
-
-
-//Mettre choix utilisateur dans un variable
-const choixCouleur = menuCouleur.value;
-const choixQuantite = menuQuantite.value;
+    // 3) Ecouter le bouton et envoyer le panier.
+    boutonPanier.addEventListener("click", (event)=>{
+    event.preventDefault();  
 
 
-  // Récupération des valeurs du formulaire sous forme de tableau clé/valeur (objet)
-let ChoixUtilisateur = {
+    // 3.1) Insertion des choix de l'utilisateur dans un variable.
+    const choixCouleur = menuCouleur.value;
+    const choixQuantite = menuQuantite.value;
+
+
+    // 3.2) Récupération des valeurs du formulaire sous forme de tableau clé/valeur (objet).
+    let ChoixUtilisateur = {
     _id: id,
     image: data.imageUrl,
     option_Couleur: choixCouleur,
     option_Quantite: choixQuantite,
     prix: data.price,
     nom: data.name,
-}
-console.log(ChoixUtilisateur);
-});
+    }
+    console.log(ChoixUtilisateur);
+    });
 
 
 
-})
+    })
