@@ -7,8 +7,11 @@
   fetch("http://localhost:3000/api/products")
 
   // 2) Traitement de la réponse en la transformant en fichier json.
-    .then(reponse => reponse.json())
-    
+  .then(function (reponse) {
+    if (reponse.ok) {
+      return reponse.json();
+    }
+  })
   // 3) Création d'une fonction "products".
         .then(function(products) {
 
@@ -39,6 +42,11 @@
         }
       })
       //fin de la fonction
+
+      // En cas d'échec de récupération des données de l'Api
+      .catch(function(error) {
+        console.log(error);
+      });
 
       
     

@@ -20,9 +20,14 @@
     .then(function (response) {
     return response.json()
     })
-    .then(function (data) {
-    console.log(data)
+    .then(function (informations) {
+        informationProduit(informations);
+        selectionProduit(informations);
+    console.log(informations);
+    })
 
+
+    let informationProduit = (informations) => {
 
     // 2) Choix de l'endroit ou positionner l'élément dynamique
     const positionImage = document.querySelector(".item__img ");
@@ -33,18 +38,18 @@
     const positionCouleur = document.querySelector("#colors");
 
     // 3) Contenu de l'élément dynamique
-    const structureImage = `<img src=${data.imageUrl}> `;
-    const structureTitre = `<h1>${data.name}</h1>`;
-    const structurePrix = `${data.price}`;
-    const structureDescription = `<p>${data.description}</p>`;
-    const structureTitrePage = `${data.name}`;
+    const structureImage = `<img src=${informations.imageUrl}> `;
+    const structureTitre = `<h1>${informations.name}</h1>`;
+    const structurePrix = `${informations.price}`;
+    const structureDescription = `<p>${informations.description}</p>`;
+    const structureTitrePage = `${informations.name}`;
 
-    // 3.1) Création d'une boucle 'for' pour remplir la zone de sélection de la couleur (utilisation de j à la place de i car déjà utilisé)
+    // 3.1) Création d'une boucle 'for' pour remplir la zone de sélection de la couleur
     let structureCouleur = [];
-    for (i = 0; i < data.colors.length; i++) {
-    structureCouleur = structureCouleur +
-    //écriture alternative de structureCouleur +=.
-    `<option value="${data.colors[i]}">${data.colors[i]}</option>`;
+    for (i = 0; i < informations.colors.length; i++) {
+        structureCouleur = structureCouleur +
+        //écriture alternative de structureCouleur +=.
+        `<option value="${informations.colors[i]}">${informations.colors[i]}</option>`;
     }
 
     // 4) Injection du contenu dynamique.
@@ -55,6 +60,9 @@
     positionTitrePage.innerText = structureTitrePage;
     positionCouleur.innerHTML += structureCouleur;
                         //le '+' ici permet de conserver le "svp,choisissez une couleur".
+    }
+
+
 
 // III) Récupération des données sélectionnées par l'utilisateur.
 
@@ -67,9 +75,17 @@
     const boutonPanier = document.querySelector("#addToCart");
     console.log(boutonPanier);
 
+    let selectionProduit = (informations) => {
     // 3) Ecouter le bouton et envoyer le panier.
     boutonPanier.addEventListener("click", (event)=>{
     event.preventDefault();  
+
+    if (menuCouleur.value == false) {
+        confirm("Veuillez sélectionner une couleur");
+      } else if (menuQuantite.value == 0) {
+        confirm("Veuillez sélectionner le nombre d'articles souhaités");
+      } else {
+        alert("Votre article a bien été ajouté au panier");
 
 
     // 3.1) Insertion des choix de l'utilisateur dans un variable.
@@ -80,15 +96,16 @@
     // 3.2) Récupération des valeurs du formulaire sous forme de tableau clé/valeur (objet).
     let ChoixUtilisateur = {
     _id: id,
-    image: data.imageUrl,
+    image: informations.imageUrl,
     option_Couleur: choixCouleur,
     option_Quantite: choixQuantite,
-    prix: data.price,
-    nom: data.name,
+    prix: informations.price,
+    nom: informations.name,
     }
     console.log(ChoixUtilisateur);
+    }
     });
 
 
 
-    })
+    }
