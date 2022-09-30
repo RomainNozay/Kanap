@@ -1,22 +1,16 @@
 
 // I) Récupération de l'id dans L'url.
 
-    // 1) Récupération de la chaine de requête dans l'Url.
     const queryString_url_id = window.location.search;
-    console.log(queryString_url_id);
 
-    // 2) Extraction de l'id de la chaîne de requête avec UrlSearchParams.
     const urlSearchParams = new URLSearchParams(queryString_url_id);
-    console.log(urlSearchParams);
 
-    // 3) Récupération de la chaine de caractère derrière le id de mon Url.
     const id = urlSearchParams.get("id");
-    console.log(id);
+
 
 // II) Extraction des informations d'un seul produit pour remplir la page.
-
-    // 1) Utilisation d'une requête fetch (get) pour aller récupérer les paires "clé-valeur" seulement d'un canapé en ajoutant son id (de manière dynamique) à la fin de la requête. 
-    let informationUnObjet = fetch(`http://localhost:3000/api/products/${id}`)
+ 
+    fetch(`http://localhost:3000/api/products/${id}`)
     .then(function (response) {
     return response.json()
     })
@@ -26,6 +20,8 @@
     console.log(informations);
     })
 
+
+    //Gestion des données pour afficher les éléments sur la page
 
     let informationProduit = (informations) => {
 
