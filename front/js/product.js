@@ -62,12 +62,12 @@
     const boutonPanier = document.querySelector("#addToCart");
     console.log(boutonPanier);
 
-    const choixCouleur = menuCouleur.value;
-    const choixQuantite = menuQuantite.value;
-
     let selectionProduit = (informations) => {
     boutonPanier.addEventListener("click", (event)=>{
     event.preventDefault();  
+
+    const choixCouleur = menuCouleur.value;
+    const choixQuantite = menuQuantite.value;
 
     if (menuCouleur.value == false) {
         (window.alert (`Veuillez sélectionner une couleur pour votre ${informations.name}`));
@@ -79,7 +79,7 @@
       Consultez le panier: OK ou Continuer votre shopping: ANNULER`)){
         window.location.href = "cart.html";
       }else{
-        window.location.href = "index.html";
+        
       }
       
     
@@ -101,16 +101,23 @@
     let produitEnregistre = JSON.parse(localStorage.getItem("produit"));
     console.log(produitEnregistre);
 
-    if(produitEnregistre){
+    if(produitEnregistre === null){
+        produitEnregistre = [];
         produitEnregistre.push(ChoixUtilisateur);
         localStorage.setItem("produit", JSON.stringify(produitEnregistre));
         console.log(produitEnregistre);
     }
     else{
-        produitEnregistre = [];
+        const found = produitEnregistre.find(element => element._id == ChoixUtilisateur._id && element.option_Couleur == ChoixUtilisateur.option_Couleur);
+        console.log(found);
+        if (found == undefined) {
+            console.log(found)
         produitEnregistre.push(ChoixUtilisateur);
         localStorage.setItem("produit", JSON.stringify(produitEnregistre));
-        console.log(produitEnregistre);
+        }else{
+            element.option_Quantite = produitEnregistre.option_Quantite + ChoixUtilisateur.option_Quantite;
+            localStorage.setItem("produit", JSON.stringify(produitEnregistre));
+        }
     }
 
     })
