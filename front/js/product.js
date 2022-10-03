@@ -62,19 +62,27 @@
     const boutonPanier = document.querySelector("#addToCart");
     console.log(boutonPanier);
 
-    let selectionProduit = (informations) => {.
+    const choixCouleur = menuCouleur.value;
+    const choixQuantite = menuQuantite.value;
+
+    let selectionProduit = (informations) => {
     boutonPanier.addEventListener("click", (event)=>{
     event.preventDefault();  
 
     if (menuCouleur.value == false) {
-        confirm("Veuillez sélectionner une couleur");
+        (window.alert (`Veuillez sélectionner une couleur pour votre ${informations.name}`));
+        window.location.href = "#colors";
       } else if (menuQuantite.value == 0) {
-        confirm("Veuillez sélectionner le nombre d'articles souhaités");
-      } else {
-        alert("Votre article a bien été ajouté au panier");
-
-    const choixCouleur = menuCouleur.value;
-    const choixQuantite = menuQuantite.value;
+        (window.alert (` Veuillez sélectionner le nombre de ${informations.name} souhaités`));
+        window.location.href = "#quantity";
+      } else if (window.confirm (` Nous avons bien ajouté ${menuQuantite.value} ${informations.name}, couleur: "${menuCouleur.value}" à votre panier.
+      Consultez le panier: OK ou Continuer votre shopping: ANNULER`)){
+        window.location.href = "cart.html";
+      }else{
+        window.location.href = "index.html";
+      }
+      
+    
 
     let ChoixUtilisateur = {
     _id: id,
@@ -85,11 +93,25 @@
     nom: informations.name,
     }
     console.log(ChoixUtilisateur);
-    }
-    });
+    
+    
 
 // Ajouter au local storage
 
+    let produitEnregistre = JSON.parse(localStorage.getItem("produit"));
+    console.log(produitEnregistre);
 
+    if(produitEnregistre){
+        produitEnregistre.push(ChoixUtilisateur);
+        localStorage.setItem("produit", JSON.stringify(produitEnregistre));
+        console.log(produitEnregistre);
+    }
+    else{
+        produitEnregistre = [];
+        produitEnregistre.push(ChoixUtilisateur);
+        localStorage.setItem("produit", JSON.stringify(produitEnregistre));
+        console.log(produitEnregistre);
+    }
 
+    })
     }
