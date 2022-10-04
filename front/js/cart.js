@@ -20,7 +20,7 @@ for( k = 0; k < produitEnregistre.length; k++){
                   <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
                       <p>Qté :  </p>
-                      <input type="number" class="itemQuantity" name="${produitEnregistre[k].option_Quantite}" min="1" max="100" value="${produitEnregistre[k].option_Quantite}">
+                      <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${produitEnregistre[k].option_Quantite}">
                     </div>
                     <div class="cart__item__content__settings__delete">
                       <p class="deleteItem">Supprimer</p>

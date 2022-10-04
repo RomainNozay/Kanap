@@ -1,4 +1,3 @@
-
 // I) Récupération de l'id dans L'url.
 
 const queryString_url_id = window.location.search;
@@ -32,7 +31,7 @@ const positionDescription = document.querySelector("#description");
 const positionTitrePage = document.querySelector("title");
 const positionCouleur = document.querySelector("#colors");
 
-const structureImage = `<img src=${informations.imageUrl}> alt="${informations.altTxt}" `;
+const structureImage = `<img src=${informations.imageUrl}> `;
 const structureTitre = `<h1>${informations.name}</h1>`;
 const structurePrix = `${informations.price}`;
 const structureDescription = `<p>${informations.description}</p>`;
@@ -109,11 +108,12 @@ if(produitEnregistre === null){
 }
 else{
     const found = produitEnregistre.find(element => element._id == ChoixUtilisateur._id && element.option_Couleur == ChoixUtilisateur.option_Couleur);
+    console.log(found);
     if (found == undefined) {
         console.log(found)
     produitEnregistre.push(ChoixUtilisateur);
     localStorage.setItem("produit", JSON.stringify(produitEnregistre));
-    }else{
+     }else{
         found.option_Quantite +=  ChoixUtilisateur.option_Quantite;
         console.log(produitEnregistre.option_Quantite);
         console.log(found.option_Quantite);
