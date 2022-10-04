@@ -121,6 +121,6 @@ else{
         localStorage.setItem("produit", JSON.stringify(produitEnregistre));
     }
 }
-
-})
 }
+)}
+
