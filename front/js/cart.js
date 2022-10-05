@@ -1,3 +1,4 @@
+
 let produitEnregistre = JSON.parse(localStorage.getItem("produit"));
 console.log(produitEnregistre);
 
@@ -34,47 +35,24 @@ for( k = 0; k < produitEnregistre.length; k++){
     }
 }
 
-//let boutonQuantite = document.querySelectorAll("input");
-//const boutonQuantiteValeur = boutonQuantite.value;
-//console.log(boutonQuantiteValeur);
+//function changeQuantite(){
 
+  const bouttonQuantitePanier = document.querySelectorAll("input.itemQuantity");
+  console.log(bouttonQuantitePanier);
+  for (i = 0; i < bouttonQuantitePanier.length; i++){
+    bouttonQuantitePanier[i].addEventListener("change", change);
+    function change(){
+    console.log("coucou");
 
-//function nouvelleQuantite() {
-//boutonQuantite.addEventListener("change", nouvelleQuantite);
-
-//function nouvelleQuantite() {
-  
-  //boutonQuantiteValeurNouveau = boutonQuantite.value;
-  //produitEnregistre.option_Quantite = boutonQuantiteValeurNouveau;
-
-  //localStorage.setItem("produit", JSON.stringify(produitEnregistre));
-  //console.log(produitEnregistre);
-//}
-
-let bouttonSupprimer = document.querySelectorAll(".cart__item__content__settings__delete");
-console.log(bouttonSupprimer);
-
-function supprimerLigne() {
-bouttonSupprimer.addEventListener("click" , supprimerLigne);
-
-
-
-for (i = 0; i < bouttonSupprimer.length; i++) {
-
-//sélection de l'ID qui va être supprimé
-let idASupprimer = produitEnregistre[i]._id;
-    console.log(produitEnregistre[i]._id);
-    console.log(idASupprimer);
-
-
-    //avec filter
-    produitEnregistre = produitEnregistre.filter( element => element._id !== idASupprimer);
-    console.log(produitEnregistre);
-
-
-
-}
   }
+}
+
+
+
+
+
+
+  
 
 
 
