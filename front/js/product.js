@@ -100,6 +100,7 @@ console.log(ChoixUtilisateur);
 let produitEnregistre = JSON.parse(localStorage.getItem("produit"));
 console.log(produitEnregistre);
 
+
 if(produitEnregistre === null){
     produitEnregistre = [];
     produitEnregistre.push(ChoixUtilisateur);
@@ -114,7 +115,7 @@ else{
     produitEnregistre.push(ChoixUtilisateur);
     localStorage.setItem("produit", JSON.stringify(produitEnregistre));
      }else{
-        found.option_Quantite +=  ChoixUtilisateur.option_Quantite;
+        found.option_Quantite =  ChoixUtilisateur.option_Quantite;
         console.log(produitEnregistre.option_Quantite);
         console.log(found.option_Quantite);
         console.log(ChoixUtilisateur.option_Quantite)
