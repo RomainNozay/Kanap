@@ -76,7 +76,7 @@ if (menuCouleur.value == false) {
     window.location.href = "#quantity";
   } else { (window.confirm (` Nous avons bien ajouté ${menuQuantite.value} ${informations.name}, couleur: "${menuCouleur.value}" à votre panier.
   Consultez le panier: OK ou Continuer votre shopping: ANNULER`)) 
-    window.location.href = "cart.html";
+    //window.location.href = "cart.html";
     let ChoixUtilisateur = {
       _id: id,
       image: informations.imageUrl,
@@ -124,13 +124,10 @@ else{
     localStorage.setItem("produit", JSON.stringify(produitEnregistre));
      }else{
       const quantiteEnregistre = parseInt(found.option_Quantite);
-      console.log(quantiteEnregistre);
       const ajoutQuantite = parseInt (ChoixUtilisateur.option_Quantite);
-      console.log(ajoutQuantite);
         found.option_Quantite = quantiteEnregistre + ajoutQuantite;
-        console.log(found.option_Quantite);
-        console.log(ChoixUtilisateur.option_Quantite)
         localStorage.setItem("produit", JSON.stringify(produitEnregistre));
+        console.log(produitEnregistre);
     }
 }
 }
