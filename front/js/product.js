@@ -74,24 +74,32 @@ if (menuCouleur.value == false) {
   } else if (menuQuantite.value == 0) {
     (window.alert (` Veuillez sélectionner le nombre de ${informations.name} souhaités`));
     window.location.href = "#quantity";
-  } else if (window.confirm (` Nous avons bien ajouté ${menuQuantite.value} ${informations.name}, couleur: "${menuCouleur.value}" à votre panier.
-  Consultez le panier: OK ou Continuer votre shopping: ANNULER`)){
+  } else { (window.confirm (` Nous avons bien ajouté ${menuQuantite.value} ${informations.name}, couleur: "${menuCouleur.value}" à votre panier.
+  Consultez le panier: OK ou Continuer votre shopping: ANNULER`)) 
     window.location.href = "cart.html";
-  }else{
-    
-  }
+    let ChoixUtilisateur = {
+      _id: id,
+      image: informations.imageUrl,
+      option_Couleur: choixCouleur,
+      option_Quantite: choixQuantite,
+      prix: informations.price,
+      nom: informations.name,
+      }
+      console.log(ChoixUtilisateur);
+
+
   
 
 
-let ChoixUtilisateur = {
-_id: id,
-image: informations.imageUrl,
-option_Couleur: choixCouleur,
-option_Quantite: choixQuantite,
-prix: informations.price,
-nom: informations.name,
-}
-console.log(ChoixUtilisateur);
+//let ChoixUtilisateur = {
+//_id: id,
+//image: informations.imageUrl,
+//option_Couleur: choixCouleur,
+//option_Quantite: choixQuantite,
+//prix: informations.price,
+//nom: informations.name,
+//}
+//console.log(ChoixUtilisateur);
 
 
 
@@ -126,5 +134,6 @@ else{
     }
 }
 }
-)}
+})
+}
 
