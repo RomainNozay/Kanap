@@ -115,8 +115,11 @@ else{
     produitEnregistre.push(ChoixUtilisateur);
     localStorage.setItem("produit", JSON.stringify(produitEnregistre));
      }else{
-        found.option_Quantite =  ChoixUtilisateur.option_Quantite;
-        console.log(produitEnregistre.option_Quantite);
+      const quantiteEnregistre = parseInt(found.option_Quantite);
+      console.log(quantiteEnregistre);
+      const ajoutQuantite = parseInt (ChoixUtilisateur.option_Quantite);
+      console.log(ajoutQuantite);
+        found.option_Quantite = quantiteEnregistre + ajoutQuantite;
         console.log(found.option_Quantite);
         console.log(ChoixUtilisateur.option_Quantite)
         localStorage.setItem("produit", JSON.stringify(produitEnregistre));
