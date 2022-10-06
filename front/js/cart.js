@@ -24,7 +24,7 @@ for( k = 0; k < produitEnregistre.length; k++){
                       <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${produitEnregistre[k].option_Quantite}">
                     </div>
                     <div class="cart__item__content__settings__delete">
-                      <p class="deleteItem">Supprimer</p>
+                      <p class="deleteItem" canapeId="${produitEnregistre[k]._id}" canapeCouleur="${produitEnregistre[k].option_Couleur}" >Supprimer</p>
                     </div>
                   </div>
                 </div>
@@ -46,28 +46,44 @@ for( k = 0; k < produitEnregistre.length; k++){
     //bouttonQuantitePanier[i].addEventListener("change", change);
     //function change() {
       
- // Modification d'une quantité de produit
- let bouttonQuantitePanier = document.querySelectorAll(".itemQuantity");
- for (i = 0; i < bouttonQuantitePanier.length; i++){
-   console.log(bouttonQuantitePanier[i]);
- const choixQuantiteEnregistre = bouttonQuantitePanier[i].value;
-  console.log(choixQuantiteEnregistre);
- 
+  // Modification d'une quantité de produit
+  let bouttonQuantitePanier = document.querySelectorAll("input.itemQuantity");
+  for (i = 0; i < bouttonQuantitePanier.length; i++){
+    console.log(bouttonQuantitePanier[i]);
   bouttonQuantitePanier[i].addEventListener("change", nouvelleValeur);
-  function nouvelleValeur() {  
+   
+  function nouvelleValeur(){
    for (i = 0; i < bouttonQuantitePanier.length; i++){
- let nouveauChoix = bouttonQuantitePanier[i].value;
-  console.log("nouvelle quantité rensigné =", nouveauChoix);
-  const test = produitEnregistre.find(el => el.option_Quantite !== nouveauChoix);
-  test.option_Quantite = nouveauChoix;
-  console.log("nouvelle quantite dans test.option_Quantite =", test.option_Quantite);
-  localStorage.setItem("produit", JSON.stringify(produitEnregistre));
-  console.log(produitEnregistre);
-  //location.reload();
+   const choixQuantiteAEcran = bouttonQuantitePanier[i].value;
+   console.log(choixQuantiteAEcran);
+   produitEnregistre.option_Quantite += choixQuantiteAEcran;
+   localStorage.setItem("produit", JSON.stringify(produitEnregistre));
+   console.log(produitEnregistre.option_Quantite);
+   location.reload;
+  }
+  }
+  }
  
- } 
- }
- }
+  let bouttonSupprimer = document.querySelectorAll(".deleteItem");
+  for (i = 0; i < bouttonSupprimer.length; i++){
+    console.log(bouttonSupprimer[i]);
+    bouttonSupprimer[i].addEventListener("click", e => {
+
+      
+      console.log("coucou");
+      let canapeId = e.target.getAttribute("canapeId");
+      console.log(canapeId);
+      let canapeCouleur = e.target.getAttribute("canapeCouleur");
+      console.log(canapeCouleur);
+      const rechercheElementSupprimer = produitEnregistre.find(element => element._id == canapeId && element.option_Couleur == canapeCouleur);
+      console.log(rechercheElementSupprimer);
+      produitEnregistre = produitEnregistre.filter(item => item != rechercheElementSupprimer);
+      localStorage.setItem("produit", JSON.stringify(produitEnregistre));
+      window.location.href = "cart.html";
+    })
+  }
+
+
 
 
 
