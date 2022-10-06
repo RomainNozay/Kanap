@@ -21,7 +21,7 @@ for( k = 0; k < produitEnregistre.length; k++){
                   <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
                       <p>Qté :  </p>
-                      <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${produitEnregistre[k].option_Quantite}">
+                      <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100"canapeId="${produitEnregistre[k]._id} canapeCouleur="${produitEnregistre[k].option_Couleur}" value="${produitEnregistre[k].option_Quantite}">
                     </div>
                     <div class="cart__item__content__settings__delete">
                       <p class="deleteItem" canapeId="${produitEnregistre[k]._id}" canapeCouleur="${produitEnregistre[k].option_Couleur}" >Supprimer</p>
@@ -36,50 +36,43 @@ for( k = 0; k < produitEnregistre.length; k++){
 }
 
 
-//function changeQuantite(){
-  
-  //const bouttonQuantitePanier = document.querySelectorAll("input.itemQuantity");
-  //console.log(bouttonQuantitePanier);
-  //for (i = 0; i < bouttonQuantitePanier.length; i++){
-    //const bouttonQuantitePanierValeur = bouttonQuantitePanier.value;
-      //console.log(bouttonQuantitePanier.value);
-    //bouttonQuantitePanier[i].addEventListener("change", change);
-    //function change() {
       
   // Modification d'une quantité de produit
   let bouttonQuantitePanier = document.querySelectorAll("input.itemQuantity");
   for (i = 0; i < bouttonQuantitePanier.length; i++){
     console.log(bouttonQuantitePanier[i]);
-  bouttonQuantitePanier[i].addEventListener("change", nouvelleValeur);
-   
-  function nouvelleValeur(){
-   for (i = 0; i < bouttonQuantitePanier.length; i++){
-   const choixQuantiteAEcran = bouttonQuantitePanier[i].value;
-   console.log(choixQuantiteAEcran);
-   produitEnregistre.option_Quantite += choixQuantiteAEcran;
-   localStorage.setItem("produit", JSON.stringify(produitEnregistre));
-   console.log(produitEnregistre.option_Quantite);
-   location.reload;
+  bouttonQuantitePanier[i].addEventListener("change", nouvelleValeur => {
+   console.log("coucou");
+  let canapeId = nouvelleValeur.target.getAttribute("canapeId");
+  console.log(canapeId);
+  let canapeCouleur = nouvelleValeur.target.getAttribute("canapeCouleur");
+  console.log(canapeCouleur);
+  const recherQuantiteModifier = produitEnregistre.find(element =>element._id == canapeId &&
+    element.option_Couleur == canapeCouleur);
+  console.log(recherQuantiteModifier);
+  recherQuantiteModifier = bouttonQuantitePanier.value;
+  produitEnregistre = recherQuantiteModifier;
+  localStorage.setItem("produit",JSON.stringify(produitEnregistre));
+   //window.location.href = "cart.html";
+  })
   }
-  }
-  }
+  
  
   let bouttonSupprimer = document.querySelectorAll(".deleteItem");
   for (i = 0; i < bouttonSupprimer.length; i++){
     console.log(bouttonSupprimer[i]);
     bouttonSupprimer[i].addEventListener("click", e => {
-
-      
       console.log("coucou");
       let canapeId = e.target.getAttribute("canapeId");
       console.log(canapeId);
       let canapeCouleur = e.target.getAttribute("canapeCouleur");
       console.log(canapeCouleur);
-      const rechercheElementSupprimer = produitEnregistre.find(element => element._id == canapeId && element.option_Couleur == canapeCouleur);
+      const rechercheElementSupprimer = produitEnregistre.find(element => element._id == canapeId &&
+         element.option_Couleur == canapeCouleur);
       console.log(rechercheElementSupprimer);
       produitEnregistre = produitEnregistre.filter(item => item != rechercheElementSupprimer);
       localStorage.setItem("produit", JSON.stringify(produitEnregistre));
-      window.location.href = "cart.html";
+      //window.location.href = "cart.html";
     })
   }
 
