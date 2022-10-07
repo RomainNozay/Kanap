@@ -67,7 +67,9 @@ event.preventDefault();
 
 const choixCouleur = menuCouleur.value;
 const choixQuantite = menuQuantite.value;
-
+const choixQuantiteNombre = parseInt (choixQuantite);
+console.log(typeof choixQuantiteNombre);
+console.log(typeof menuQuantite.value);
 if (menuCouleur.value == false) {
     (window.alert (`Veuillez sélectionner une couleur pour votre ${informations.name}`));
     window.location.href = "#colors";
@@ -81,11 +83,11 @@ if (menuCouleur.value == false) {
       _id: id,
       image: informations.imageUrl,
       option_Couleur: choixCouleur,
-      option_Quantite: choixQuantite,
+      option_Quantite: choixQuantiteNombre,
       prix: informations.price,
       nom: informations.name,
       }
-      console.log(ChoixUtilisateur);
+      console.log(typeof ChoixUtilisateur.option_Quantite);
 
 
   

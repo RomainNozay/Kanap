@@ -38,51 +38,98 @@ for( k = 0; k < produitEnregistre.length; k++){
 
       
   // Modification d'une quantité de produit
-  let bouttonQuantitePanier = document.querySelectorAll("input.itemQuantity");
-  for (i = 0; i < bouttonQuantitePanier.length; i++){
-    console.log(bouttonQuantitePanier[i]);
-  bouttonQuantitePanier[i].addEventListener("change", nouvelleValeur => {
-   console.log("coucou");
-  let canapeId = nouvelleValeur.target.getAttribute("canapeId");
-  console.log(canapeId);
-  let canapeCouleur = nouvelleValeur.target.getAttribute("canapeCouleur");
-  console.log(canapeCouleur);
-  const recherQuantiteModifier = produitEnregistre.find(element =>element._id == canapeId &&
-    element.option_Couleur == canapeCouleur);
-  console.log(recherQuantiteModifier);
-  recherQuantiteModifier = bouttonQuantitePanier.value;
-  produitEnregistre = recherQuantiteModifier;
-  localStorage.setItem("produit",JSON.stringify(produitEnregistre));
+  //let bouttonQuantitePanier = document.querySelectorAll("input.itemQuantity");
+  //for (i = 0; i < bouttonQuantitePanier.length; i++){
+    //console.log(bouttonQuantitePanier[i]);
+  //bouttonQuantitePanier[i].addEventListener("change", nouvelleValeur => {
+   //console.log("coucou");
+  //let canapeId = nouvelleValeur.target.getAttribute("canapeId");
+  //console.log(canapeId);
+  //let canapeCouleur = nouvelleValeur.target.getAttribute("canapeCouleur");
+  //console.log(canapeCouleur);
+  // const recherQuantiteModifier = produitEnregistre.find(element =>element._id == canapeId &&
+    //element.option_Couleur == canapeCouleur);
+  //console.log(canapeId);
+  //recherQuantiteModifier = bouttonQuantitePanier.value;
+  //produitEnregistre = recherQuantiteModifier;
+  //localStorage.setItem("produit",JSON.stringify(produitEnregistre));
    //window.location.href = "cart.html";
-  })
-  }
+  //})
+  //}
   
  
   let bouttonSupprimer = document.querySelectorAll(".deleteItem");
   for (i = 0; i < bouttonSupprimer.length; i++){
-    console.log(bouttonSupprimer[i]);
+    //console.log(bouttonSupprimer[i]);
     bouttonSupprimer[i].addEventListener("click", e => {
-      console.log("coucou");
+      //console.log("coucou");
       let canapeId = e.target.getAttribute("canapeId");
-      console.log(canapeId);
+      //console.log(canapeId);
       let canapeCouleur = e.target.getAttribute("canapeCouleur");
-      console.log(canapeCouleur);
+      //console.log(canapeCouleur);
       const rechercheElementSupprimer = produitEnregistre.find(element => element._id == canapeId &&
          element.option_Couleur == canapeCouleur);
-      console.log(rechercheElementSupprimer);
+      //console.log(rechercheElementSupprimer);
       produitEnregistre = produitEnregistre.filter(item => item != rechercheElementSupprimer);
       localStorage.setItem("produit", JSON.stringify(produitEnregistre));
-      //window.location.href = "cart.html";
+      window.location.href = "cart.html";
     })
   }
 
+  //Calcul du total d'article et prix total
 
-
-
-
-
-
+  let listeQuantitePanier= [];
   
+  for (i = 0; i < produitEnregistre.length; i++){
+    let QuantiteChaquePanier = produitEnregistre[i].option_Quantite;
+    
+    const QuantiteNombre = parseInt (QuantiteChaquePanier);
+    //console.log(typeof QuantiteNombre)
+    //Mettre quantité du panier dnas une variable
+    listeQuantitePanier.push(QuantiteNombre);
+    //console.log(listeQuantitePanier);
+    //tableau avec toutes les quantités
+  }
+  
+    // Aditionner les quantité avec reduce
+  const reducer = (accumulator, Quantite) => accumulator + Quantite;
+  const quantiteTotal = listeQuantitePanier.reduce(reducer);
+
+  //console.log(quantiteTotal);
+
+  const positionQuantite = document.querySelector("#totalQuantity");
+  const structureQuantitePanier = quantiteTotal;
+  positionQuantite.innerHTML = structureQuantitePanier;
+
+  //Calcul du prix total
+
+  let listeSousTotaux = [];
+  console.log(listeSousTotaux);
+
+  for (i = 0; i < produitEnregistre.length; i++){
+    let QuantiteChaquePanier = produitEnregistre[i].option_Quantite;
+    const QuantiteChaquePanierNombre = parseInt (QuantiteChaquePanier);
+    let PrixChaquePanier = produitEnregistre[i].prix;
+    let TotalChaqueLigne = QuantiteChaquePanierNombre * PrixChaquePanier;
+    console.log(QuantiteChaquePanierNombre);
+    console.log(PrixChaquePanier);
+    console.log(TotalChaqueLigne);
+    console.log(TotalChaqueLigne);
+
+    listeSousTotaux.push(TotalChaqueLigne);
+    console.log(listeSousTotaux);
+  }
+
+  const reducers = (accumulator, prix) => accumulator + prix;
+  const prixTotal = listeSousTotaux.reduce(reducers);
+
+  console.log(prixTotal);
+
+  const positionPrixTotal = document.querySelector("#totalPrice");
+  const structurePrixTotal = prixTotal;
+  positionPrixTotal.innerHTML = structurePrixTotal;
 
 
 
+    
+  
