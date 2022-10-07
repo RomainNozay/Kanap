@@ -60,16 +60,16 @@ for( k = 0; k < produitEnregistre.length; k++){
  
   let bouttonSupprimer = document.querySelectorAll(".deleteItem");
   for (i = 0; i < bouttonSupprimer.length; i++){
-    //console.log(bouttonSupprimer[i]);
+    
     bouttonSupprimer[i].addEventListener("click", e => {
-      //console.log("coucou");
+      
       let canapeId = e.target.getAttribute("canapeId");
-      //console.log(canapeId);
+      
       let canapeCouleur = e.target.getAttribute("canapeCouleur");
-      //console.log(canapeCouleur);
+      
       const rechercheElementSupprimer = produitEnregistre.find(element => element._id == canapeId &&
          element.option_Couleur == canapeCouleur);
-      //console.log(rechercheElementSupprimer);
+      
       produitEnregistre = produitEnregistre.filter(item => item != rechercheElementSupprimer);
       localStorage.setItem("produit", JSON.stringify(produitEnregistre));
       window.location.href = "cart.html";
@@ -84,10 +84,10 @@ for( k = 0; k < produitEnregistre.length; k++){
     let QuantiteChaquePanier = produitEnregistre[i].option_Quantite;
     
     const QuantiteNombre = parseInt (QuantiteChaquePanier);
-    //console.log(typeof QuantiteNombre)
+    
     //Mettre quantité du panier dnas une variable
     listeQuantitePanier.push(QuantiteNombre);
-    //console.log(listeQuantitePanier);
+    
     //tableau avec toutes les quantités
   }
   
@@ -95,7 +95,7 @@ for( k = 0; k < produitEnregistre.length; k++){
   const reducer = (accumulator, Quantite) => accumulator + Quantite;
   const quantiteTotal = listeQuantitePanier.reduce(reducer);
 
-  //console.log(quantiteTotal);
+  
 
   const positionQuantite = document.querySelector("#totalQuantity");
   const structureQuantitePanier = quantiteTotal;
@@ -104,7 +104,7 @@ for( k = 0; k < produitEnregistre.length; k++){
   //Calcul du prix total
 
   let listeSousTotaux = [];
-  console.log(listeSousTotaux);
+  
 
   for (i = 0; i < produitEnregistre.length; i++){
     let QuantiteChaquePanier = produitEnregistre[i].option_Quantite;
@@ -117,13 +117,12 @@ for( k = 0; k < produitEnregistre.length; k++){
     console.log(TotalChaqueLigne);
 
     listeSousTotaux.push(TotalChaqueLigne);
-    console.log(listeSousTotaux);
+    
   }
 
   const reducers = (accumulator, prix) => accumulator + prix;
   const prixTotal = listeSousTotaux.reduce(reducers);
 
-  console.log(prixTotal);
 
   const positionPrixTotal = document.querySelector("#totalPrice");
   const structurePrixTotal = prixTotal;
