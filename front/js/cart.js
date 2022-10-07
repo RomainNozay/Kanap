@@ -111,10 +111,7 @@ for( k = 0; k < produitEnregistre.length; k++){
     const QuantiteChaquePanierNombre = parseInt (QuantiteChaquePanier);
     let PrixChaquePanier = produitEnregistre[i].prix;
     let TotalChaqueLigne = QuantiteChaquePanierNombre * PrixChaquePanier;
-    console.log(QuantiteChaquePanierNombre);
-    console.log(PrixChaquePanier);
-    console.log(TotalChaqueLigne);
-    console.log(TotalChaqueLigne);
+    
 
     listeSousTotaux.push(TotalChaqueLigne);
     
