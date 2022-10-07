@@ -35,27 +35,30 @@ for( k = 0; k < produitEnregistre.length; k++){
     }
 }
 
-
       
   // Modification d'une quantité de produit
-  //let bouttonQuantitePanier = document.querySelectorAll("input.itemQuantity");
-  //for (i = 0; i < bouttonQuantitePanier.length; i++){
-    //console.log(bouttonQuantitePanier[i]);
-  //bouttonQuantitePanier[i].addEventListener("change", nouvelleValeur => {
-   //console.log("coucou");
-  //let canapeId = nouvelleValeur.target.getAttribute("canapeId");
-  //console.log(canapeId);
-  //let canapeCouleur = nouvelleValeur.target.getAttribute("canapeCouleur");
-  //console.log(canapeCouleur);
-  // const recherQuantiteModifier = produitEnregistre.find(element =>element._id == canapeId &&
-    //element.option_Couleur == canapeCouleur);
-  //console.log(canapeId);
-  //recherQuantiteModifier = bouttonQuantitePanier.value;
-  //produitEnregistre = recherQuantiteModifier;
-  //localStorage.setItem("produit",JSON.stringify(produitEnregistre));
-   //window.location.href = "cart.html";
-  //})
-  //}
+   // Modification d'une quantité de produit
+ let bouttonQuantitePanier = document.querySelectorAll(".itemQuantity");
+ for (i = 0; i < bouttonQuantitePanier.length; i++){
+   //console.log(bouttonQuantitePanier[i]);
+ const choixQuantiteEnregistre = bouttonQuantitePanier[i].value;
+  //console.log(choixQuantiteEnregistre);
+
+  bouttonQuantitePanier[i].addEventListener("change", ev => { 
+   
+ let nouveauChoix = ev.target.choixQuantiteEnregistre;
+  console.log("nouvelle quantité rensigné =", nouveauChoix);
+  const test = produitEnregistre.find(el => el.option_Quantite !== nouveauChoix);
+  test.option_Quantite = nouveauChoix;
+  console.log("nouvelle quantite dans test.option_Quantite =", test.option_Quantite);
+  localStorage.setItem("produit", JSON.stringify(produitEnregistre));
+  console.log(produitEnregistre);
+  //location.reload();
+
+ } 
+ )
+ }
+   
   
  
   let bouttonSupprimer = document.querySelectorAll(".deleteItem");
@@ -85,7 +88,7 @@ for( k = 0; k < produitEnregistre.length; k++){
     
     const QuantiteNombre = parseInt (QuantiteChaquePanier);
     
-    //Mettre quantité du panier dnas une variable
+    //Mettre quantité du panier dans une variable
     listeQuantitePanier.push(QuantiteNombre);
     
     //tableau avec toutes les quantités
@@ -93,9 +96,7 @@ for( k = 0; k < produitEnregistre.length; k++){
   
     // Aditionner les quantité avec reduce
   const reducer = (accumulator, Quantite) => accumulator + Quantite;
-  const quantiteTotal = listeQuantitePanier.reduce(reducer);
-
-  
+  const quantiteTotal = listeQuantitePanier.reduce(reducer,0);
 
   const positionQuantite = document.querySelector("#totalQuantity");
   const structureQuantitePanier = quantiteTotal;
@@ -105,21 +106,18 @@ for( k = 0; k < produitEnregistre.length; k++){
 
   let listeSousTotaux = [];
   
-
   for (i = 0; i < produitEnregistre.length; i++){
     let QuantiteChaquePanier = produitEnregistre[i].option_Quantite;
     const QuantiteChaquePanierNombre = parseInt (QuantiteChaquePanier);
     let PrixChaquePanier = produitEnregistre[i].prix;
     let TotalChaqueLigne = QuantiteChaquePanierNombre * PrixChaquePanier;
     
-
     listeSousTotaux.push(TotalChaqueLigne);
     
   }
 
   const reducers = (accumulator, prix) => accumulator + prix;
-  const prixTotal = listeSousTotaux.reduce(reducers);
-
+  const prixTotal = listeSousTotaux.reduce(reducers,0);
 
   const positionPrixTotal = document.querySelector("#totalPrice");
   const structurePrixTotal = prixTotal;
