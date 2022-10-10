@@ -134,6 +134,16 @@ let formulaire = {
   ville : document.querySelector("#city").value,
   email : document.querySelector("#email").value,
 }
+//Contrôle du prénom
+const lePrenom = formulaire.prenom;
+if(/^[A-Za-z]{3,20}$/.test(lePrenom)){
+console.log("lePrenom");
+
+}else{
+ console.log("ko");
+};
+
+
 
 localStorage.setItem("formulaire", JSON.stringify(formulaire));
 
