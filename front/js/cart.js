@@ -123,7 +123,30 @@ for( k = 0; k < produitEnregistre.length; k++){
   const structurePrixTotal = prixTotal;
   positionPrixTotal.innerHTML = structurePrixTotal;
 
+//récupérer les valeurs du formulaire
+const boutonFormulaire = document.querySelector("#order");
+boutonFormulaire.addEventListener("click", (e) =>{
+  e.preventDefault();
+let formulaire = {
+  prenom : document.querySelector("#firstName").value,
+  nom : document.querySelector("#lastName").value,
+  adresse : document.querySelector("#address").value,
+  ville : document.querySelector("#city").value,
+  email : document.querySelector("#email").value,
+}
 
+localStorage.setItem("formulaire", JSON.stringify(formulaire));
 
-    
-  
+const aEnvoyerServeur = {
+  produitEnregistre,
+  formulaire,
+}
+})
+
+const formulaireEnvoye = JSON.parse(localStorage.getItem("formulaire"));
+
+document.querySelector("#firstName").value = formulaireEnvoye.prenom;
+document.querySelector("#lastName").value = formulaireEnvoye.nom;
+document.querySelector("#address").value = formulaireEnvoye.adresse;
+document.querySelector("#city").value = formulaireEnvoye.ville;
+document.querySelector("#email").value = formulaireEnvoye.email;
