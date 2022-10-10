@@ -134,19 +134,23 @@ let formulaire = {
   ville : document.querySelector("#city").value,
   email : document.querySelector("#email").value,
 }
+
+function prenomControle(){
 //Contrôle du prénom
-const lePrenom = formulaire.prenom;
-if(/^[A-Za-z]{3,20}$/.test(lePrenom)){
-console.log("lePrenom");
+  const lePrenom = formulaire.prenom;
+  if(/^[A-Za-z]{3,20}$/.test(lePrenom)){
+    return true;
 
-}else{
- console.log("ko");
-};
+  } else {
+    return false;
+  }
+}
 
-
-
+if(prenomControle()){
 localStorage.setItem("formulaire", JSON.stringify(formulaire));
-
+}else{
+  alert ("attention")
+}
 const aEnvoyerServeur = {
   produitEnregistre,
   formulaire,
