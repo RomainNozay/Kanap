@@ -1,5 +1,5 @@
 
-let produitEnregistre = JSON.parse(localStorage.getItem("produit"));
+let produitEnregistre = JSON.parse(localStorage.getItem("panier"));
 console.log(produitEnregistre);
 
 const positionPanier = document.querySelector("#cart__items");
@@ -39,25 +39,25 @@ for( k = 0; k < produitEnregistre.length; k++){
   // Modification d'une quantité de produit
    // Modification d'une quantité de produit
  let bouttonQuantitePanier = document.querySelectorAll(".itemQuantity");
- for (i = 0; i < bouttonQuantitePanier.length; i++){
-   //console.log(bouttonQuantitePanier[i]);
- const choixQuantiteEnregistre = bouttonQuantitePanier[i].value;
-  //console.log(choixQuantiteEnregistre);
+ for (l = 0; l < bouttonQuantitePanier.length; l++){
+   console.log(bouttonQuantitePanier[l]);
+ const choixQuantiteEnregistre = bouttonQuantitePanier[l].value;
+  console.log(choixQuantiteEnregistre);
 
-  bouttonQuantitePanier[i].addEventListener("change", ev => { 
-   
- let nouveauChoix = ev.target.choixQuantiteEnregistre;
-  console.log("nouvelle quantité rensigné =", nouveauChoix);
+  bouttonQuantitePanier[l].addEventListener("change", e => {
+    
+ let nouveauChoix = bouttonQuantitePanier[l];
+  console.log(typeof nouveauChoix);
   const test = produitEnregistre.find(el => el.option_Quantite !== nouveauChoix);
   test.option_Quantite = nouveauChoix;
   console.log("nouvelle quantite dans test.option_Quantite =", test.option_Quantite);
-  localStorage.setItem("produit", JSON.stringify(produitEnregistre));
+  //localStorage.setItem("panier", JSON.stringify(produitEnregistre));
   console.log(produitEnregistre);
   //location.reload();
-
- } 
- )
- }
+  
+  } )
+}
+ 
    
   
  
@@ -74,7 +74,7 @@ for( k = 0; k < produitEnregistre.length; k++){
          element.option_Couleur == canapeCouleur);
       
       produitEnregistre = produitEnregistre.filter(item => item != rechercheElementSupprimer);
-      localStorage.setItem("produit", JSON.stringify(produitEnregistre));
+      localStorage.setItem("panier", JSON.stringify(produitEnregistre));
       window.location.href = "cart.html";
     })
   }

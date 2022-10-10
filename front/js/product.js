@@ -90,45 +90,32 @@ if (menuCouleur.value == false) {
       console.log(typeof ChoixUtilisateur.option_Quantite);
 
 
-  
-
-
-//let ChoixUtilisateur = {
-//_id: id,
-//image: informations.imageUrl,
-//option_Couleur: choixCouleur,
-//option_Quantite: choixQuantite,
-//prix: informations.price,
-//nom: informations.name,
-//}
-//console.log(ChoixUtilisateur);
-
 
 
 // Ajouter au local storage
 
-let produitEnregistre = JSON.parse(localStorage.getItem("produit"));
+let produitEnregistre = JSON.parse(localStorage.getItem("panier"));
 console.log(produitEnregistre);
 
 
 if(produitEnregistre === null){
     produitEnregistre = [];
     produitEnregistre.push(ChoixUtilisateur);
-    localStorage.setItem("produit", JSON.stringify(produitEnregistre));
+    localStorage.setItem("panier", JSON.stringify(produitEnregistre));
     console.log(produitEnregistre);
 }
 else{
-    const found = produitEnregistre.find(element => element._id == ChoixUtilisateur._id && element.option_Couleur == ChoixUtilisateur.option_Couleur);
-    console.log(found);
-    if (found == undefined) {
-        console.log(found)
+    const optionTrouver = produitEnregistre.find(element => element._id == ChoixUtilisateur._id && element.option_Couleur == ChoixUtilisateur.option_Couleur);
+    console.log(optionTrouver);
+    if (optionTrouver == undefined) {
+        console.log(optionTrouver)
     produitEnregistre.push(ChoixUtilisateur);
-    localStorage.setItem("produit", JSON.stringify(produitEnregistre));
+    localStorage.setItem("panier", JSON.stringify(produitEnregistre));
      }else{
-      const quantiteEnregistre = parseInt(found.option_Quantite);
+      const quantiteEnregistre = parseInt(optionTrouver.option_Quantite);
       const ajoutQuantite = parseInt (ChoixUtilisateur.option_Quantite);
-        found.option_Quantite = quantiteEnregistre + ajoutQuantite;
-        localStorage.setItem("produit", JSON.stringify(produitEnregistre));
+      optionTrouver.option_Quantite = quantiteEnregistre + ajoutQuantite;
+        localStorage.setItem("panier", JSON.stringify(produitEnregistre));
         console.log(produitEnregistre);
     }
 }
