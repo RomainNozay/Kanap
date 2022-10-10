@@ -146,7 +146,17 @@ function prenomControle(){
   }
 }
 
-if(prenomControle()){
+function nomControle(){
+  //Contrôle du prénom
+    const lenom = formulaire.nom;
+    if(/^[A-Za-z]{3,20}$/.test(lenom)){
+      return true;
+  
+    } else {
+      return false;
+    }
+  }
+if(prenomControle() && nomControle()){
 localStorage.setItem("formulaire", JSON.stringify(formulaire));
 }else{
   alert ("attention")
