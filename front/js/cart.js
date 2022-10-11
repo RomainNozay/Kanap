@@ -1,11 +1,34 @@
+// Récupération des produits de l'API
+async function getProductById(productId) {
+  return fetch("http://localhost:3000/api/products/" + productId)
+    .then(function (res) {
+      return res.json();
+    })
+    .catch((err) => {
+      // Erreur serveur
+      console.log("erreur");
+    })
+    .then(function (response) {
+      return response;
+    });
+}
+displayCart();
+
+
+
+  //let produitEnregistre = JSON.parse(localStorage.getItem("panier"));
+//console.log(produitEnregistre);
+
+async function displayCart() {
+const positionPanier = document.querySelector("#cart__items");
+let structurePanier = [];
 
 let produitEnregistre = JSON.parse(localStorage.getItem("panier"));
 console.log(produitEnregistre);
 
-const positionPanier = document.querySelector("#cart__items");
-
-let structurePanier = [];
 for( k = 0; k < produitEnregistre.length; k++){
+  const product = await getProductById(produitEnregistre[k]._id);
+  console.log(product.price);
     structurePanier = structurePanier + 
     `
     <article class="cart__item" data-id="${produitEnregistre[k]._id}" data-color="${produitEnregistre[k].option_Couleur}">
@@ -16,7 +39,7 @@ for( k = 0; k < produitEnregistre.length; k++){
                   <div class="cart__item__content__description">
                     <h2>${produitEnregistre[k].nom}</h2>
                     <p>${produitEnregistre[k].option_Couleur}</p>
-                    <p>${produitEnregistre[k].prix} €</p>
+                    <p>${product.price} €</p>
                   </div>
                   <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
@@ -34,7 +57,7 @@ for( k = 0; k < produitEnregistre.length; k++){
     positionPanier.innerHTML = structurePanier;
     }
 }
-
+}
       
   // Modification d'une quantité de produit
    // Modification d'une quantité de produit
@@ -89,7 +112,8 @@ for( k = 0; k < produitEnregistre.length; k++){
   }
 
   //Calcul du total d'article et prix total
-
+  let produitEnregistre = JSON.parse(localStorage.getItem("panier"));
+  console.log(produitEnregistre);
   let listeQuantitePanier= [];
   
   for (i = 0; i < produitEnregistre.length; i++){
