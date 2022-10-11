@@ -21,7 +21,7 @@ for( k = 0; k < produitEnregistre.length; k++){
                   <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
                       <p>Qté :  </p>
-                      <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100"canapeId="${produitEnregistre[k]._id} canapeCouleur="${produitEnregistre[k].option_Couleur}" value="${produitEnregistre[k].option_Quantite}">
+                      <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" canapeId="${produitEnregistre[k]._id}" canapeCouleur="${produitEnregistre[k].option_Couleur}" value="${produitEnregistre[k].option_Quantite}">
                     </div>
                     <div class="cart__item__content__settings__delete">
                       <p class="deleteItem" canapeId="${produitEnregistre[k]._id}" canapeCouleur="${produitEnregistre[k].option_Couleur}" >Supprimer</p>
@@ -44,19 +44,15 @@ for( k = 0; k < produitEnregistre.length; k++){
  const choixQuantiteEnregistre = bouttonQuantitePanier[l].value;
   console.log(choixQuantiteEnregistre);
 
-  bouttonQuantitePanier[l].addEventListener("change", e => {
+  bouttonQuantitePanier[l].addEventListener("change", (e) => {
+    e.preventDefault();
     
- let nouveauChoix = bouttonQuantitePanier[l];
-  console.log(typeof nouveauChoix);
-  const test = produitEnregistre.find(el => el.option_Quantite !== nouveauChoix);
-  test.option_Quantite = nouveauChoix;
-  console.log("nouvelle quantite dans test.option_Quantite =", test.option_Quantite);
-  //localStorage.setItem("panier", JSON.stringify(produitEnregistre));
-  console.log(produitEnregistre);
-  //location.reload();
-  
-  } )
-}
+ let nouveauChoix = e.target.value;
+ let idChoisi = e.target.getAttribute("canapeId");
+  console.log(idChoisi);
+ let couleurChoisi = e.target.getAttribute("canapeCouleur");
+ console.log(couleurChoisi);
+ 
  
    
   
