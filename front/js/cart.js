@@ -52,8 +52,21 @@ for( k = 0; k < produitEnregistre.length; k++){
   console.log(idChoisi);
  let couleurChoisi = e.target.getAttribute("canapeCouleur");
  console.log(couleurChoisi);
- 
- 
+ let nouveau = JSON.parse(localStorage.getItem("panier"));
+ console.log(nouveau);
+
+ nouveau = nouveau.map((item, index) => {
+  if (item._id === idChoisi && item.option_Couleur === couleurChoisi) {
+    item.option_Quantite = nouveauChoix;
+  }
+  return item;
+ });
+ let nouveauProduitEnregistre = JSON.stringify(nouveau);
+ localStorage.setItem("panier",nouveauProduitEnregistre); 
+ console.log(nouveauProduitEnregistre);
+ location.reload();
+  })
+}
    
   
  
