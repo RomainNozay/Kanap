@@ -31,9 +31,8 @@ for( k = 0; k < produitEnregistre.length; k++){
               `
     if(k === produitEnregistre.lenght); {
     positionPanier.innerHTML = structurePanier;
-    }
+    }  
 }
-
       
   // Modification d'une quantité de produit
    // Modification d'une quantité de produit
@@ -51,16 +50,16 @@ for( k = 0; k < produitEnregistre.length; k++){
   console.log(idChoisi);
  let couleurChoisi = e.target.getAttribute("canapeCouleur");
  console.log(couleurChoisi);
- let nouveau = JSON.parse(localStorage.getItem("panier"));
- console.log(nouveau);
+ let panierLocal = JSON.parse(localStorage.getItem("panier"));
+ //console.log(nouveau);
 
- nouveau = nouveau.map((item, index) => {
-  if (item._id === idChoisi && item.option_Couleur === couleurChoisi) {
-    item.option_Quantite = nouveauChoix;
+ panierLocal = panierLocal.map((panier, index) => {
+  if (panier._id === idChoisi && panier.option_Couleur === couleurChoisi) {
+    panier.option_Quantite = nouveauChoix;
   }
-  return item;
+  return panier;
  });
- let nouveauProduitEnregistre = JSON.stringify(nouveau);
+ let nouveauProduitEnregistre = JSON.stringify(panierLocal);
  localStorage.setItem("panier",nouveauProduitEnregistre); 
  console.log(nouveauProduitEnregistre);
  location.reload();
@@ -87,29 +86,26 @@ for( k = 0; k < produitEnregistre.length; k++){
     })
   }
 
-  //Calcul du total d'article et prix total
-
-  let listeQuantitePanier= [];
   
+  //Calcul du total d'article et prix total
+  let listeQuantitePanier= [];
   for (i = 0; i < produitEnregistre.length; i++){
     let QuantiteChaquePanier = produitEnregistre[i].option_Quantite;
-    
     const QuantiteNombre = parseInt (QuantiteChaquePanier);
-    
-    //Mettre quantité du panier dans une variable
+    //Mettre quantité du panier dans une variable //tableau avec toutes les quantités
     listeQuantitePanier.push(QuantiteNombre);
-    
-    //tableau avec toutes les quantités
-  }
-  
+    }
+
     // Aditionner les quantité avec reduce
   const reducer = (accumulator, Quantite) => accumulator + Quantite;
   const quantiteTotal = listeQuantitePanier.reduce(reducer,0);
 
-  const positionQuantite = document.querySelector("#totalQuantity");
+  
   const structureQuantitePanier = quantiteTotal;
+  const positionQuantite = document.querySelector("#totalQuantity");
   positionQuantite.innerHTML = structureQuantitePanier;
-
+  console.log(structureQuantitePanier);
+  
   //Calcul du prix total
 
   let listeSousTotaux = [];
@@ -147,9 +143,11 @@ function prenomControle(){
 //Contrôle du prénom
   const lePrenom = formulaire.prenom;
   if(/^[A-Za-z]{3,20}$/.test(lePrenom)){
+    document.querySelector("#firstNameErrorMsg").textContent ="";
     return true;
 
   } else {
+    document.querySelector("#firstNameErrorMsg").textContent = "Veuillez renseigner votre prénom sans chiffres ni caractères spéciaux.";
     return false;
   }
 }
@@ -158,13 +156,54 @@ function nomControle(){
   //Contrôle du prénom
     const lenom = formulaire.nom;
     if(/^[A-Za-z]{3,20}$/.test(lenom)){
+      document.querySelector("#firstNameErrorMsg").textContent ="";
       return true;
   
     } else {
+      document.querySelector("#lastNameErrorMsg").textContent = "Veuillez renseigner votre nom sans chiffres ni caractères spéciaux.";
       return false;
     }
   }
-if(prenomControle() && nomControle()){
+
+  function villeControle(){
+    //Contrôle du prénom
+      const laVille = formulaire.ville;
+      if(/^[A-Za-z]{3,20}$/.test(laVille)){
+        document.querySelector("#firstNameErrorMsg").textContent ="";
+        return true;
+    
+      } else {
+        document.querySelector("#cityErrorMsg").textContent = "Veuillez renseigner votre ville sans chiffres ni caractères spéciaux.";
+        return false;
+      }
+    }
+
+    function adresseControle(){
+        const laAdresse = formulaire.adresse;
+        if(/^[A-Za-z0-9\s]{3,100}$/.test(laAdresse)){
+          document.querySelector("#firstNameErrorMsg").textContent ="";
+          return true;
+      
+        } else {
+          document.querySelector("#addressErrorMsg").textContent = "Veuillez renseigner votre adresse sans caractères spéciaux.";
+          return false;
+        }
+      }
+
+      function emailControle(){
+        const leEmail = formulaire.email;
+        if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(leEmail)){ // récupérer sur le site de w3
+          document.querySelector("#emailErrorMsg").textContent ="";
+          return true;
+      
+        } else {
+          document.querySelector("#emailErrorMsg").textContent = "Veuillez renseigner une adresse mail valide.";
+          return false;
+        }
+      }
+
+
+if(prenomControle() && nomControle() && villeControle() && adresseControle() && emailControle()){
 localStorage.setItem("formulaire", JSON.stringify(formulaire));
 }else{
   alert ("attention")
