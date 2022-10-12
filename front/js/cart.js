@@ -1,6 +1,7 @@
 let produitEnregistre = JSON.parse(localStorage.getItem("panier"));
 console.log(produitEnregistre);
 
+  function AffichageDuPanier(){
 const positionPanier = document.querySelector("#cart__items");
 
 let structurePanier = [];
@@ -33,9 +34,10 @@ for( k = 0; k < produitEnregistre.length; k++){
     positionPanier.innerHTML = structurePanier;
     }  
 }
-      
-  // Modification d'une quantité de produit
-   // Modification d'une quantité de produit
+}
+AffichageDuPanier();
+
+  function ModificationQuantitéProduit(){
  let bouttonQuantitePanier = document.querySelectorAll(".itemQuantity");
  for (l = 0; l < bouttonQuantitePanier.length; l++){
    console.log(bouttonQuantitePanier[l]);
@@ -65,9 +67,10 @@ for( k = 0; k < produitEnregistre.length; k++){
  location.reload();
   })
 }
-   
-  
- 
+} 
+ModificationQuantitéProduit();
+
+  function SuppressionArticle(){
   let bouttonSupprimer = document.querySelectorAll(".deleteItem");
   for (i = 0; i < bouttonSupprimer.length; i++){
     
@@ -80,13 +83,15 @@ for( k = 0; k < produitEnregistre.length; k++){
       const rechercheElementSupprimer = produitEnregistre.find(element => element._id == canapeId &&
          element.option_Couleur == canapeCouleur);
       
-      produitEnregistre = produitEnregistre.filter(item => item != rechercheElementSupprimer);
+      produitEnregistre = produitEnregistre.filter(el => el != rechercheElementSupprimer);
       localStorage.setItem("panier", JSON.stringify(produitEnregistre));
       window.location.href = "cart.html";
     })
   }
+}
+SuppressionArticle();
 
-  
+  function TotalQuantite(){
   //Calcul du total d'article et prix total
   let listeQuantitePanier= [];
   for (i = 0; i < produitEnregistre.length; i++){
@@ -105,11 +110,12 @@ for( k = 0; k < produitEnregistre.length; k++){
   const positionQuantite = document.querySelector("#totalQuantity");
   positionQuantite.innerHTML = structureQuantitePanier;
   console.log(structureQuantitePanier);
-  
+  }
+TotalQuantite();
   //Calcul du prix total
 
+  function SommeTotale(){
   let listeSousTotaux = [];
-  
   for (i = 0; i < produitEnregistre.length; i++){
     let QuantiteChaquePanier = produitEnregistre[i].option_Quantite;
     const QuantiteChaquePanierNombre = parseInt (QuantiteChaquePanier);
@@ -117,7 +123,6 @@ for( k = 0; k < produitEnregistre.length; k++){
     let TotalChaqueLigne = QuantiteChaquePanierNombre * PrixChaquePanier;
     
     listeSousTotaux.push(TotalChaqueLigne);
-    
   }
 
   const reducers = (accumulator, prix) => accumulator + prix;
@@ -126,8 +131,10 @@ for( k = 0; k < produitEnregistre.length; k++){
   const positionPrixTotal = document.querySelector("#totalPrice");
   const structurePrixTotal = prixTotal;
   positionPrixTotal.innerHTML = structurePrixTotal;
+}
+SommeTotale();
 
-//récupérer les valeurs du formulaire
+function récupérationInformationFormulaire(){
 const boutonFormulaire = document.querySelector("#order");
 boutonFormulaire.addEventListener("click", (e) =>{
   e.preventDefault();
@@ -138,16 +145,19 @@ let formulaire = {
   ville : document.querySelector("#city").value,
   email : document.querySelector("#email").value,
 }
-
+//const regexLettre = (value) => {
+  //return /^[A-Za-z]{3,20}$/.test(value);
+//}
+//function texteErreurLettre(){document.querySelector("#firstNameErrorMsg").textContent = "Veuillez remplir cette zone sans chiffres ni caractères spéciaux.";}
 function prenomControle(){
 //Contrôle du prénom
   const lePrenom = formulaire.prenom;
   if(/^[A-Za-z]{3,20}$/.test(lePrenom)){
-    document.querySelector("#firstNameErrorMsg").textContent ="";
+    document.querySelector("#firstNameErrorMsg").textContent = "";
     return true;
 
   } else {
-    document.querySelector("#firstNameErrorMsg").textContent = "Veuillez renseigner votre prénom sans chiffres ni caractères spéciaux.";
+    document.querySelector("#firstNameErrorMsg").textContent = "Veuillez remplir cette zone sans chiffres ni caractères spéciaux.";
     return false;
   }
 }
@@ -156,11 +166,11 @@ function nomControle(){
   //Contrôle du prénom
     const lenom = formulaire.nom;
     if(/^[A-Za-z]{3,20}$/.test(lenom)){
-      document.querySelector("#firstNameErrorMsg").textContent ="";
+      document.querySelector("#lastNameErrorMsg").textContent ="";
       return true;
   
     } else {
-      document.querySelector("#lastNameErrorMsg").textContent = "Veuillez renseigner votre nom sans chiffres ni caractères spéciaux.";
+      document.querySelector("#lastNameErrorMsg").textContent = "Veuillez remplir cette zone sans chiffres ni caractères spéciaux.";
       return false;
     }
   }
@@ -169,11 +179,11 @@ function nomControle(){
     //Contrôle du prénom
       const laVille = formulaire.ville;
       if(/^[A-Za-z]{3,20}$/.test(laVille)){
-        document.querySelector("#firstNameErrorMsg").textContent ="";
+        document.querySelector("#cityErrorMsg").textContent ="";
         return true;
     
       } else {
-        document.querySelector("#cityErrorMsg").textContent = "Veuillez renseigner votre ville sans chiffres ni caractères spéciaux.";
+        document.querySelector("#cityErrorMsg").textContent = "Veuillez remplir cette zone sans chiffres ni caractères spéciaux.";
         return false;
       }
     }
@@ -181,7 +191,7 @@ function nomControle(){
     function adresseControle(){
         const laAdresse = formulaire.adresse;
         if(/^[A-Za-z0-9\s]{3,100}$/.test(laAdresse)){
-          document.querySelector("#firstNameErrorMsg").textContent ="";
+          document.querySelector("#addressErrorMsg").textContent ="";
           return true;
       
         } else {
@@ -192,7 +202,7 @@ function nomControle(){
 
       function emailControle(){
         const leEmail = formulaire.email;
-        if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(leEmail)){ // récupérer sur le site de w3
+        if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(leEmail)){
           document.querySelector("#emailErrorMsg").textContent ="";
           return true;
       
@@ -208,12 +218,16 @@ localStorage.setItem("formulaire", JSON.stringify(formulaire));
 }else{
   alert ("attention")
 }
+
+
 const aEnvoyerServeur = {
   produitEnregistre,
   formulaire,
 }
 })
-
+}
+récupérationInformationFormulaire();
+function remplissageFormulaireLocalStorage(){
 const formulaireEnvoye = JSON.parse(localStorage.getItem("formulaire"));
 
 document.querySelector("#firstName").value = formulaireEnvoye.prenom;
@@ -221,3 +235,5 @@ document.querySelector("#lastName").value = formulaireEnvoye.nom;
 document.querySelector("#address").value = formulaireEnvoye.adresse;
 document.querySelector("#city").value = formulaireEnvoye.ville;
 document.querySelector("#email").value = formulaireEnvoye.email;
+}
+remplissageFormulaireLocalStorage();

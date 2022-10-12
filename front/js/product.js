@@ -1,5 +1,4 @@
 // I) Récupération de l'id dans L'url.
-
 const queryString_url_id = window.location.search;
 
 const urlSearchParams = new URLSearchParams(queryString_url_id);
@@ -14,15 +13,15 @@ fetch(`http://localhost:3000/api/products/${id}`)
 return response.json()
 })
 .then(function (informations) {
-    informationProduit(informations);
-    selectionProduit(informations);
+    affichageDuProduit(informations);
+    créationDuLocalStorage(informations);
 console.log(informations);
 })
 
 
 //Gestion des données pour afficher les éléments sur la page
 
-let informationProduit = (informations) => {
+let affichageDuProduit = (informations) => {
 
 const positionImage = document.querySelector(".item__img ");
 const positionTitre = document.querySelector("#title");
@@ -57,11 +56,10 @@ positionCouleur.innerHTML += structureCouleur;
 
 const menuCouleur = document.querySelector("#colors");
 const menuQuantite = document.querySelector("#quantity");
-
 const boutonPanier = document.querySelector("#addToCart");
 console.log(boutonPanier);
 
-let selectionProduit = (informations) => {
+let créationDuLocalStorage = (informations) => {
 boutonPanier.addEventListener("click", (event)=>{
 event.preventDefault();  
 
