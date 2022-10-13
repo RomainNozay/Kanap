@@ -24,11 +24,11 @@ const positionPanier = document.querySelector("#cart__items");
 let structurePanier = [];
 
 let produitEnregistre = JSON.parse(localStorage.getItem("panier"));
-console.log(produitEnregistre);
+//console.log(produitEnregistre);
 
 for( k = 0; k < produitEnregistre.length; k++){
   const product = await getProductById(produitEnregistre[k]._id);
-  console.log(product.price);
+  //console.log(product.price);
     structurePanier = structurePanier + 
     `
     <article class="cart__item" data-id="${produitEnregistre[k]._id}" data-color="${produitEnregistre[k].option_Couleur}">
@@ -62,7 +62,7 @@ for( k = 0; k < produitEnregistre.length; k++){
       let QuantiteChaquePanier = produitEnregistre[i].option_Quantite;
       const QuantiteChaquePanierNombre = parseInt (QuantiteChaquePanier);
       let PrixChaquePanier = product.price;
-      console.log(PrixChaquePanier)
+      //console.log(PrixChaquePanier)
       let TotalChaqueLigne = QuantiteChaquePanierNombre * PrixChaquePanier;
       
       listeSousTotaux.push(TotalChaqueLigne);
@@ -77,9 +77,11 @@ for( k = 0; k < produitEnregistre.length; k++){
     positionPrixTotal.innerHTML = structurePrixTotal;
 }
 }
-      
+/////////////////////////////////////////////////////////////////////////////////////////
+
   // Modification d'une quantité de produit
    // Modification d'une quantité de produit
+   function ModificationQuantitéProduit(){
  let bouttonQuantitePanier = document.querySelectorAll(".itemQuantity");
  for (l = 0; l < bouttonQuantitePanier.length; l++){
    console.log(bouttonQuantitePanier[l]);
@@ -109,8 +111,10 @@ for( k = 0; k < produitEnregistre.length; k++){
  location.reload();
   })
 }
-   
-  
+   }
+ModificationQuantitéProduit();
+
+/////////////////////////////////////////////////////////////////////////////////////  
  
   let bouttonSupprimer = document.querySelectorAll(".deleteItem");
   for (i = 0; i < bouttonSupprimer.length; i++){
