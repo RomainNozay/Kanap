@@ -19,7 +19,7 @@ async function getProductById(productId) {
 //let produitEnregistre = JSON.parse(localStorage.getItem("panier"));
 //console.log(produitEnregistre);
 
-async function displayCart() {
+async function AffichagePanier() {
   const positionPanier = document.querySelector("#cart__items");
   let structurePanier = [];
 
@@ -56,18 +56,19 @@ async function displayCart() {
     if (k === produitEnregistre.lenght); {
       positionPanier.innerHTML = structurePanier;
     }
+  
     let listeSousTotaux = [];
 
-    for (i = 0; i < produitEnregistre.length; i++) {
-      let QuantiteChaquePanier = produitEnregistre[i].option_Quantite;
-      const QuantiteChaquePanierNombre = parseInt(QuantiteChaquePanier);
+    //for (i = 0; i < produitEnregistre.length; i++) {
+      let QuantiteChaquePanier = produitEnregistre[k].option_Quantite;
+      
       let PrixChaquePanier = product.price;
-      //console.log(PrixChaquePanier)
-      let TotalChaqueLigne = QuantiteChaquePanierNombre * PrixChaquePanier;
-
+      const PrixChaquePanierNombre = parseInt(PrixChaquePanier);
+      let TotalChaqueLigne = QuantiteChaquePanier * PrixChaquePanierNombre;
+      
       listeSousTotaux.push(TotalChaqueLigne);
-
-    }
+      console.log(listeSousTotaux)
+    //}
 
     const reducers = (accumulator, prix) => accumulator + prix;
     const prixTotal = listeSousTotaux.reduce(reducers, 0);
@@ -81,11 +82,11 @@ async function displayCart() {
 
   for (i = 0; i < produitEnregistre.length; i++) {
     let QuantiteChaquePanier = produitEnregistre[i].option_Quantite;
-
+console.log(QuantiteChaquePanier);
     const QuantiteNombre = parseInt(QuantiteChaquePanier);
 
     listeQuantitePanier.push(QuantiteNombre);
-
+    console.log(listeQuantitePanier);
   }
 
   const reducer = (accumulator, Quantite) => accumulator + Quantite;
@@ -97,12 +98,9 @@ async function displayCart() {
 
   ///////////////////////////////////////////////////////////////////////////////////////////
 
-  function ModificationQuantitéProduit() {
+  function ModificationQuantiteProduit() {
     let bouttonQuantitePanier = document.querySelectorAll(".itemQuantity");
     for (l = 0; l < bouttonQuantitePanier.length; l++) {
-      console.log(bouttonQuantitePanier[l]);
-      const choixQuantiteEnregistre = bouttonQuantitePanier[l].value;
-      console.log(choixQuantiteEnregistre);
 
       bouttonQuantitePanier[l].addEventListener("change", (e) => {
         e.preventDefault();
@@ -150,12 +148,12 @@ async function displayCart() {
       })
     }
   }
-  ModificationQuantitéProduit();
+  ModificationQuantiteProduit();
   SuppressionArticle();
 
 }
 
-function récupérationInformationFormulaire() {
+function recuperationInformationFormulaire() {
   const boutonFormulaire = document.querySelector("#order");
   boutonFormulaire.addEventListener("click", (e) => {
     e.preventDefault();
@@ -255,6 +253,6 @@ function remplissageFormulaireLocalStorage() {
   document.querySelector("#email").value = formulaireEnvoye.email;
 }
 
-displayCart();
-récupérationInformationFormulaire();
+AffichagePanier();
+recuperationInformationFormulaire();
 remplissageFormulaireLocalStorage();
