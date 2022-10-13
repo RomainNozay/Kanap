@@ -76,11 +76,34 @@ for( k = 0; k < produitEnregistre.length; k++){
     const structurePrixTotal = prixTotal;
     positionPrixTotal.innerHTML = structurePrixTotal;
 }
-}
-/////////////////////////////////////////////////////////////////////////////////////////
 
-  // Modification d'une quantité de produit
-   // Modification d'une quantité de produit
+/////////////////////////////////////////////////////////////////////////////////////////
+//Calcul du total d'article et prix total
+//let produitEnregistre = JSON.parse(localStorage.getItem("panier"));
+//console.log(produitEnregistre);
+let listeQuantitePanier= [];
+
+for (i = 0; i < produitEnregistre.length; i++){
+  let QuantiteChaquePanier = produitEnregistre[i].option_Quantite;
+  
+  const QuantiteNombre = parseInt (QuantiteChaquePanier);
+  
+  //Mettre quantité du panier dans une variable
+  listeQuantitePanier.push(QuantiteNombre);
+  
+  //tableau avec toutes les quantités
+}
+
+  // Aditionner les quantité avec reduce
+const reducer = (accumulator, Quantite) => accumulator + Quantite;
+const quantiteTotal = listeQuantitePanier.reduce(reducer,0);
+
+const positionQuantite = document.querySelector("#totalQuantity");
+const structureQuantitePanier = quantiteTotal;
+positionQuantite.innerHTML = structureQuantitePanier;
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
    function ModificationQuantitéProduit(){
  let bouttonQuantitePanier = document.querySelectorAll(".itemQuantity");
  for (l = 0; l < bouttonQuantitePanier.length; l++){
@@ -133,34 +156,9 @@ ModificationQuantitéProduit();
       window.location.href = "cart.html";
     })
   }
-
-  //Calcul du total d'article et prix total
-  let produitEnregistre = JSON.parse(localStorage.getItem("panier"));
-  console.log(produitEnregistre);
-  let listeQuantitePanier= [];
+}
   
-  for (i = 0; i < produitEnregistre.length; i++){
-    let QuantiteChaquePanier = produitEnregistre[i].option_Quantite;
-    
-    const QuantiteNombre = parseInt (QuantiteChaquePanier);
-    
-    //Mettre quantité du panier dans une variable
-    listeQuantitePanier.push(QuantiteNombre);
-    
-    //tableau avec toutes les quantités
-  }
-  
-    // Aditionner les quantité avec reduce
-  const reducer = (accumulator, Quantite) => accumulator + Quantite;
-  const quantiteTotal = listeQuantitePanier.reduce(reducer,0);
 
-  const positionQuantite = document.querySelector("#totalQuantity");
-  const structureQuantitePanier = quantiteTotal;
-  positionQuantite.innerHTML = structureQuantitePanier;
-
-  //Calcul du prix total
-
- 
 function récupérationInformationFormulaire(){
 const boutonFormulaire = document.querySelector("#order");
 boutonFormulaire.addEventListener("click", (e) =>{
