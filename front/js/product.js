@@ -9,44 +9,44 @@ const id = urlSearchParams.get("id");
 // II) Extraction des informations d'un seul produit pour remplir la page.
 
 fetch(`http://localhost:3000/api/products/${id}`)
-.then(function (response) {
-return response.json()
-})
-.then(function (informations) {
+  .then(function (response) {
+    return response.json()
+  })
+  .then(function (informations) {
     affichageDuProduit(informations);
     créationDuLocalStorage(informations);
-//console.log(informations);
-})
+    //console.log(informations);
+  })
 
 //Gestion des données pour afficher les éléments sur la page
 
 let affichageDuProduit = (informations) => {
 
-const positionImage = document.querySelector(".item__img ");
-const positionTitre = document.querySelector("#title");
-const positionPrix = document.querySelector("#price");
-const positionDescription = document.querySelector("#description");
-const positionTitrePage = document.querySelector("title");
-const positionCouleur = document.querySelector("#colors");
+  const positionImage = document.querySelector(".item__img ");
+  const positionTitre = document.querySelector("#title");
+  const positionPrix = document.querySelector("#price");
+  const positionDescription = document.querySelector("#description");
+  const positionTitrePage = document.querySelector("title");
+  const positionCouleur = document.querySelector("#colors");
 
-const structureImage = `<img src=${informations.imageUrl}> `;
-const structureTitre = `<h1>${informations.name}</h1>`;
-const structurePrix = `${informations.price}`;
-const structureDescription = `<p>${informations.description}</p>`;
-const structureTitrePage = `${informations.name}`;
+  const structureImage = `<img src=${informations.imageUrl}> `;
+  const structureTitre = `<h1>${informations.name}</h1>`;
+  const structurePrix = `${informations.price}`;
+  const structureDescription = `<p>${informations.description}</p>`;
+  const structureTitrePage = `${informations.name}`;
 
-let structureCouleur = [];
-for (i = 0; i < informations.colors.length; i++) {
+  let structureCouleur = [];
+  for (i = 0; i < informations.colors.length; i++) {
     structureCouleur = structureCouleur +
-    `<option value="${informations.colors[i]}">${informations.colors[i]}</option>`;
-}
+      `<option value="${informations.colors[i]}">${informations.colors[i]}</option>`;
+  }
 
-positionImage.innerHTML = structureImage;
-positionTitre.innerHTML = structureTitre;
-positionPrix.innerText = structurePrix;
-positionDescription.innerHTML = structureDescription;
-positionTitrePage.innerText = structureTitrePage;
-positionCouleur.innerHTML += structureCouleur;
+  positionImage.innerHTML = structureImage;
+  positionTitre.innerHTML = structureTitre;
+  positionPrix.innerText = structurePrix;
+  positionDescription.innerHTML = structureDescription;
+  positionTitrePage.innerText = structureTitrePage;
+  positionCouleur.innerHTML += structureCouleur;
 }
 
 // III) Récupération des données sélectionnées par l'utilisateur.
@@ -56,53 +56,54 @@ const menuQuantite = document.querySelector("#quantity");
 const boutonPanier = document.querySelector("#addToCart");
 
 let créationDuLocalStorage = (informations) => {
-boutonPanier.addEventListener("click", (event)=>{
-event.preventDefault();  
+  boutonPanier.addEventListener("click", (event) => {
+    event.preventDefault();
 
-const choixCouleur = menuCouleur.value;
-const choixQuantite = menuQuantite.value;
-const choixQuantiteNombre = parseInt (choixQuantite);
+    const choixCouleur = menuCouleur.value;
+    const choixQuantite = menuQuantite.value;
+    const choixQuantiteNombre = parseInt(choixQuantite);
 
-if (menuCouleur.value == false) {
-    (window.alert (`Veuillez sélectionner une couleur pour votre ${informations.name}`));
-    window.location.href = "#colors";
-  } else if (menuQuantite.value == 0) {
-    (window.alert (` Veuillez sélectionner le nombre de ${informations.name} souhaités`));
-    window.location.href = "#quantity";
-  } else { (window.confirm (` Nous avons bien ajouté ${menuQuantite.value} ${informations.name}, couleur: "${menuCouleur.value}" à votre panier.
-  Consultez le panier: OK ou Continuer votre shopping: ANNULER`)) 
-    //window.location.href = "cart.html";
+    if (menuCouleur.value == false) {
+      (window.alert(`Veuillez sélectionner une couleur pour votre ${informations.name}`));
+      window.location.href = "#colors";
+    } else if (menuQuantite.value == 0) {
+      (window.alert(` Veuillez sélectionner le nombre de ${informations.name} souhaités`));
+      window.location.href = "#quantity";
+    } else {
+      (window.confirm(` Nous avons bien ajouté ${menuQuantite.value} ${informations.name}, couleur: "${menuCouleur.value}" à votre panier.
+  Consultez le panier: OK ou Continuer votre shopping: ANNULER`))
+      //window.location.href = "cart.html";
 
-    let ChoixUtilisateur = {
-      _id: id,
-      image: informations.imageUrl,
-      option_Couleur: choixCouleur,
-      option_Quantite: choixQuantiteNombre,
-      nom: informations.name,
+      let ChoixUtilisateur = {
+        _id: id,
+        image: informations.imageUrl,
+        option_Couleur: choixCouleur,
+        option_Quantite: choixQuantiteNombre,
+        nom: informations.name,
       }
 
-// Ajouter au local storage
+      // Ajouter au local storage
 
-let produitEnregistre = JSON.parse(localStorage.getItem("panier"));
+      let produitEnregistre = JSON.parse(localStorage.getItem("panier"));
 
-if(produitEnregistre === null){
-    produitEnregistre = [];
-    produitEnregistre.push(ChoixUtilisateur);
-    localStorage.setItem("panier", JSON.stringify(produitEnregistre));
-}
-else{
-    const optionTrouver = produitEnregistre.find(element => element._id == ChoixUtilisateur._id && element.option_Couleur == ChoixUtilisateur.option_Couleur);
-    console.log(optionTrouver);
-    if (optionTrouver == undefined) {
-        console.log(optionTrouver)
-    produitEnregistre.push(ChoixUtilisateur);
-    localStorage.setItem("panier", JSON.stringify(produitEnregistre));
-     }else{
-      optionTrouver.option_Quantite = optionTrouver.option_Quantite + ChoixUtilisateur.option_Quantite;
+      if (produitEnregistre === null) {
+        produitEnregistre = [];
+        produitEnregistre.push(ChoixUtilisateur);
         localStorage.setItem("panier", JSON.stringify(produitEnregistre));
+      }
+      else {
+        const optionTrouver = produitEnregistre.find(element => element._id == ChoixUtilisateur._id && element.option_Couleur == ChoixUtilisateur.option_Couleur);
+        console.log(optionTrouver);
+        if (optionTrouver == undefined) {
+          console.log(optionTrouver)
+          produitEnregistre.push(ChoixUtilisateur);
+          localStorage.setItem("panier", JSON.stringify(produitEnregistre));
+        } else {
+          optionTrouver.option_Quantite = optionTrouver.option_Quantite + ChoixUtilisateur.option_Quantite;
+          localStorage.setItem("panier", JSON.stringify(produitEnregistre));
+        }
+      }
     }
-}
-}
-})
+  })
 }
 
