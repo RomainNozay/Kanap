@@ -67,7 +67,7 @@ async function AffichagePanier() {
       let TotalChaqueLigne = QuantiteChaquePanier * PrixChaquePanierNombre;
       
       listeSousTotaux.push(TotalChaqueLigne);
-      console.log(listeSousTotaux)
+      console.log(listeSousTotaux);
     //}
 
     const reducers = (accumulator, prix) => accumulator + prix;
@@ -182,7 +182,7 @@ function recuperationInformationFormulaire() {
 
     function nomControle() {
       const lenom = formulaire.nom;
-      if (/^[A-Za-z]{3,20}$/.test(lenom)) {
+      if (/^([A-Za-z]{3,20})?([-]{0,1})?([A-Za-z]{3,20})$/.test(lenom)) {
         document.querySelector("#lastNameErrorMsg").textContent = "";
         return true;
 
