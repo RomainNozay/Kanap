@@ -12,7 +12,7 @@ async function getProductById(productId) {
       return response;
     });
 }
-displayCart();
+
 
 
 
@@ -76,11 +76,7 @@ for( k = 0; k < produitEnregistre.length; k++){
     const structurePrixTotal = prixTotal;
     positionPrixTotal.innerHTML = structurePrixTotal;
 }
-
 /////////////////////////////////////////////////////////////////////////////////////////
-//Calcul du total d'article et prix total
-//let produitEnregistre = JSON.parse(localStorage.getItem("panier"));
-//console.log(produitEnregistre);
 let listeQuantitePanier= [];
 
 for (i = 0; i < produitEnregistre.length; i++){
@@ -94,7 +90,6 @@ for (i = 0; i < produitEnregistre.length; i++){
   //tableau avec toutes les quantités
 }
 
-  // Aditionner les quantité avec reduce
 const reducer = (accumulator, Quantite) => accumulator + Quantite;
 const quantiteTotal = listeQuantitePanier.reduce(reducer,0);
 
@@ -135,29 +130,32 @@ positionQuantite.innerHTML = structureQuantitePanier;
   })
 }
    }
-ModificationQuantitéProduit();
 
 /////////////////////////////////////////////////////////////////////////////////////  
- 
-  let bouttonSupprimer = document.querySelectorAll(".deleteItem");
-  for (i = 0; i < bouttonSupprimer.length; i++){
-    
-    bouttonSupprimer[i].addEventListener("click", e => {
-      
-      let canapeId = e.target.getAttribute("canapeId");
-      
-      let canapeCouleur = e.target.getAttribute("canapeCouleur");
-      
-      const rechercheElementSupprimer = produitEnregistre.find(element => element._id == canapeId &&
-         element.option_Couleur == canapeCouleur);
-      
-      produitEnregistre = produitEnregistre.filter(item => item != rechercheElementSupprimer);
-      localStorage.setItem("panier", JSON.stringify(produitEnregistre));
-      window.location.href = "cart.html";
-    })
-  }
-}
+
+function SuppressionArticle(){
+let bouttonSupprimer = document.querySelectorAll(".deleteItem");
+for (i = 0; i < bouttonSupprimer.length; i++){
   
+  bouttonSupprimer[i].addEventListener("click", e => {
+    
+    let canapeId = e.target.getAttribute("canapeId");
+    
+    let canapeCouleur = e.target.getAttribute("canapeCouleur");
+    
+    const rechercheElementSupprimer = produitEnregistre.find(element => element._id == canapeId &&
+       element.option_Couleur == canapeCouleur);
+    
+    produitEnregistre = produitEnregistre.filter(el => el != rechercheElementSupprimer);
+    localStorage.setItem("panier", JSON.stringify(produitEnregistre));
+    window.location.href = "cart.html";
+  })
+}
+}
+ModificationQuantitéProduit();
+SuppressionArticle();
+
+}  
 
 function récupérationInformationFormulaire(){
 const boutonFormulaire = document.querySelector("#order");
@@ -251,7 +249,7 @@ const aEnvoyerServeur = {
 }
 })
 }
-récupérationInformationFormulaire();
+
 function remplissageFormulaireLocalStorage(){
 const formulaireEnvoye = JSON.parse(localStorage.getItem("formulaire"));
 
@@ -261,4 +259,7 @@ document.querySelector("#address").value = formulaireEnvoye.adresse;
 document.querySelector("#city").value = formulaireEnvoye.ville;
 document.querySelector("#email").value = formulaireEnvoye.email;
 }
+
+displayCart();
+récupérationInformationFormulaire();
 remplissageFormulaireLocalStorage();
