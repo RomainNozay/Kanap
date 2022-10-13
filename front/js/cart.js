@@ -1,11 +1,34 @@
+// Récupération des produits de l'API
+async function getProductById(productId) {
+  return fetch("http://localhost:3000/api/products/" + productId)
+    .then(function (res) {
+      return res.json();
+    })
+    .catch((err) => {
+      // Erreur serveur
+      console.log("erreur");
+    })
+    .then(function (response) {
+      return response;
+    });
+}
+displayCart();
+
+
+
+  //let produitEnregistre = JSON.parse(localStorage.getItem("panier"));
+//console.log(produitEnregistre);
+
+async function displayCart() {
+const positionPanier = document.querySelector("#cart__items");
+let structurePanier = [];
+
 let produitEnregistre = JSON.parse(localStorage.getItem("panier"));
 console.log(produitEnregistre);
 
-  function AffichageDuPanier(){
-const positionPanier = document.querySelector("#cart__items");
-
-let structurePanier = [];
 for( k = 0; k < produitEnregistre.length; k++){
+  const product = await getProductById(produitEnregistre[k]._id);
+  console.log(product.price);
     structurePanier = structurePanier + 
     `
     <article class="cart__item" data-id="${produitEnregistre[k]._id}" data-color="${produitEnregistre[k].option_Couleur}">
@@ -16,7 +39,7 @@ for( k = 0; k < produitEnregistre.length; k++){
                   <div class="cart__item__content__description">
                     <h2>${produitEnregistre[k].nom}</h2>
                     <p>${produitEnregistre[k].option_Couleur}</p>
-                    <p>${produitEnregistre[k].prix} €</p>
+                    <p>${product.price} €</p>
                   </div>
                   <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
@@ -32,12 +55,12 @@ for( k = 0; k < produitEnregistre.length; k++){
               `
     if(k === produitEnregistre.lenght); {
     positionPanier.innerHTML = structurePanier;
-    }  
+    }
 }
 }
-AffichageDuPanier();
-
-  function ModificationQuantitéProduit(){
+      
+  // Modification d'une quantité de produit
+   // Modification d'une quantité de produit
  let bouttonQuantitePanier = document.querySelectorAll(".itemQuantity");
  for (l = 0; l < bouttonQuantitePanier.length; l++){
    console.log(bouttonQuantitePanier[l]);
@@ -52,25 +75,24 @@ AffichageDuPanier();
   console.log(idChoisi);
  let couleurChoisi = e.target.getAttribute("canapeCouleur");
  console.log(couleurChoisi);
- let panierLocal = JSON.parse(localStorage.getItem("panier"));
- //console.log(nouveau);
+ let nouveau = JSON.parse(localStorage.getItem("panier"));
+ console.log(nouveau);
 
- panierLocal = panierLocal.map((panier, index) => {
-  if (panier._id === idChoisi && panier.option_Couleur === couleurChoisi) {
-    panier.option_Quantite = nouveauChoix;
+ nouveau = nouveau.map((item, index) => {
+  if (item._id === idChoisi && item.option_Couleur === couleurChoisi) {
+    item.option_Quantite = nouveauChoix;
   }
-  return panier;
+  return item;
  });
- let nouveauProduitEnregistre = JSON.stringify(panierLocal);
+ let nouveauProduitEnregistre = JSON.stringify(nouveau);
  localStorage.setItem("panier",nouveauProduitEnregistre); 
  console.log(nouveauProduitEnregistre);
  location.reload();
   })
 }
-} 
-ModificationQuantitéProduit();
-
-  function SuppressionArticle(){
+   
+  
+ 
   let bouttonSupprimer = document.querySelectorAll(".deleteItem");
   for (i = 0; i < bouttonSupprimer.length; i++){
     
@@ -83,39 +105,40 @@ ModificationQuantitéProduit();
       const rechercheElementSupprimer = produitEnregistre.find(element => element._id == canapeId &&
          element.option_Couleur == canapeCouleur);
       
-      produitEnregistre = produitEnregistre.filter(el => el != rechercheElementSupprimer);
+      produitEnregistre = produitEnregistre.filter(item => item != rechercheElementSupprimer);
       localStorage.setItem("panier", JSON.stringify(produitEnregistre));
       window.location.href = "cart.html";
     })
   }
-}
-SuppressionArticle();
 
-  function TotalQuantite(){
   //Calcul du total d'article et prix total
+  let produitEnregistre = JSON.parse(localStorage.getItem("panier"));
+  console.log(produitEnregistre);
   let listeQuantitePanier= [];
+  
   for (i = 0; i < produitEnregistre.length; i++){
     let QuantiteChaquePanier = produitEnregistre[i].option_Quantite;
+    
     const QuantiteNombre = parseInt (QuantiteChaquePanier);
-    //Mettre quantité du panier dans une variable //tableau avec toutes les quantités
+    
+    //Mettre quantité du panier dans une variable
     listeQuantitePanier.push(QuantiteNombre);
-    }
-
+    
+    //tableau avec toutes les quantités
+  }
+  
     // Aditionner les quantité avec reduce
   const reducer = (accumulator, Quantite) => accumulator + Quantite;
   const quantiteTotal = listeQuantitePanier.reduce(reducer,0);
 
-  
-  const structureQuantitePanier = quantiteTotal;
   const positionQuantite = document.querySelector("#totalQuantity");
+  const structureQuantitePanier = quantiteTotal;
   positionQuantite.innerHTML = structureQuantitePanier;
-  console.log(structureQuantitePanier);
-  }
-TotalQuantite();
+
   //Calcul du prix total
 
-  function SommeTotale(){
   let listeSousTotaux = [];
+  
   for (i = 0; i < produitEnregistre.length; i++){
     let QuantiteChaquePanier = produitEnregistre[i].option_Quantite;
     const QuantiteChaquePanierNombre = parseInt (QuantiteChaquePanier);
@@ -123,6 +146,7 @@ TotalQuantite();
     let TotalChaqueLigne = QuantiteChaquePanierNombre * PrixChaquePanier;
     
     listeSousTotaux.push(TotalChaqueLigne);
+    
   }
 
   const reducers = (accumulator, prix) => accumulator + prix;
@@ -131,9 +155,6 @@ TotalQuantite();
   const positionPrixTotal = document.querySelector("#totalPrice");
   const structurePrixTotal = prixTotal;
   positionPrixTotal.innerHTML = structurePrixTotal;
-}
-SommeTotale();
-
 function récupérationInformationFormulaire(){
 const boutonFormulaire = document.querySelector("#order");
 boutonFormulaire.addEventListener("click", (e) =>{

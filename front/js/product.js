@@ -15,9 +15,8 @@ return response.json()
 .then(function (informations) {
     affichageDuProduit(informations);
     créationDuLocalStorage(informations);
-console.log(informations);
+//console.log(informations);
 })
-
 
 //Gestion des données pour afficher les éléments sur la page
 
@@ -50,14 +49,11 @@ positionTitrePage.innerText = structureTitrePage;
 positionCouleur.innerHTML += structureCouleur;
 }
 
-
-
 // III) Récupération des données sélectionnées par l'utilisateur.
 
 const menuCouleur = document.querySelector("#colors");
 const menuQuantite = document.querySelector("#quantity");
 const boutonPanier = document.querySelector("#addToCart");
-console.log(boutonPanier);
 
 let créationDuLocalStorage = (informations) => {
 boutonPanier.addEventListener("click", (event)=>{
@@ -66,8 +62,7 @@ event.preventDefault();
 const choixCouleur = menuCouleur.value;
 const choixQuantite = menuQuantite.value;
 const choixQuantiteNombre = parseInt (choixQuantite);
-console.log(typeof choixQuantiteNombre);
-console.log(typeof menuQuantite.value);
+
 if (menuCouleur.value == false) {
     (window.alert (`Veuillez sélectionner une couleur pour votre ${informations.name}`));
     window.location.href = "#colors";
@@ -77,30 +72,23 @@ if (menuCouleur.value == false) {
   } else { (window.confirm (` Nous avons bien ajouté ${menuQuantite.value} ${informations.name}, couleur: "${menuCouleur.value}" à votre panier.
   Consultez le panier: OK ou Continuer votre shopping: ANNULER`)) 
     //window.location.href = "cart.html";
+
     let ChoixUtilisateur = {
       _id: id,
       image: informations.imageUrl,
       option_Couleur: choixCouleur,
       option_Quantite: choixQuantiteNombre,
-      prix: informations.price,
       nom: informations.name,
       }
-      console.log(typeof ChoixUtilisateur.option_Quantite);
-
-
-
 
 // Ajouter au local storage
 
 let produitEnregistre = JSON.parse(localStorage.getItem("panier"));
-console.log(produitEnregistre);
-
 
 if(produitEnregistre === null){
     produitEnregistre = [];
     produitEnregistre.push(ChoixUtilisateur);
     localStorage.setItem("panier", JSON.stringify(produitEnregistre));
-    console.log(produitEnregistre);
 }
 else{
     const optionTrouver = produitEnregistre.find(element => element._id == ChoixUtilisateur._id && element.option_Couleur == ChoixUtilisateur.option_Couleur);
@@ -110,11 +98,8 @@ else{
     produitEnregistre.push(ChoixUtilisateur);
     localStorage.setItem("panier", JSON.stringify(produitEnregistre));
      }else{
-      const quantiteEnregistre = parseInt(optionTrouver.option_Quantite);
-      const ajoutQuantite = parseInt (ChoixUtilisateur.option_Quantite);
-      optionTrouver.option_Quantite = quantiteEnregistre + ajoutQuantite;
+      optionTrouver.option_Quantite = optionTrouver.option_Quantite + ChoixUtilisateur.option_Quantite;
         localStorage.setItem("panier", JSON.stringify(produitEnregistre));
-        console.log(produitEnregistre);
     }
 }
 }
