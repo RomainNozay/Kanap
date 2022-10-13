@@ -56,6 +56,25 @@ for( k = 0; k < produitEnregistre.length; k++){
     if(k === produitEnregistre.lenght); {
     positionPanier.innerHTML = structurePanier;
     }
+    let listeSousTotaux = [];
+  
+    for (i = 0; i < produitEnregistre.length; i++){
+      let QuantiteChaquePanier = produitEnregistre[i].option_Quantite;
+      const QuantiteChaquePanierNombre = parseInt (QuantiteChaquePanier);
+      let PrixChaquePanier = product.price;
+      console.log(PrixChaquePanier)
+      let TotalChaqueLigne = QuantiteChaquePanierNombre * PrixChaquePanier;
+      
+      listeSousTotaux.push(TotalChaqueLigne);
+      
+    }
+  
+    const reducers = (accumulator, prix) => accumulator + prix;
+    const prixTotal = listeSousTotaux.reduce(reducers,0);
+  
+    const positionPrixTotal = document.querySelector("#totalPrice");
+    const structurePrixTotal = prixTotal;
+    positionPrixTotal.innerHTML = structurePrixTotal;
 }
 }
       
@@ -137,24 +156,7 @@ for( k = 0; k < produitEnregistre.length; k++){
 
   //Calcul du prix total
 
-  let listeSousTotaux = [];
-  
-  for (i = 0; i < produitEnregistre.length; i++){
-    let QuantiteChaquePanier = produitEnregistre[i].option_Quantite;
-    const QuantiteChaquePanierNombre = parseInt (QuantiteChaquePanier);
-    let PrixChaquePanier = produitEnregistre[i].prix;
-    let TotalChaqueLigne = QuantiteChaquePanierNombre * PrixChaquePanier;
-    
-    listeSousTotaux.push(TotalChaqueLigne);
-    
-  }
-
-  const reducers = (accumulator, prix) => accumulator + prix;
-  const prixTotal = listeSousTotaux.reduce(reducers,0);
-
-  const positionPrixTotal = document.querySelector("#totalPrice");
-  const structurePrixTotal = prixTotal;
-  positionPrixTotal.innerHTML = structurePrixTotal;
+ 
 function récupérationInformationFormulaire(){
 const boutonFormulaire = document.querySelector("#order");
 boutonFormulaire.addEventListener("click", (e) =>{
