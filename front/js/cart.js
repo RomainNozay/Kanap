@@ -170,7 +170,7 @@ function recuperationInformationFormulaire() {
     //function texteErreurLettre(){document.querySelector("#firstNameErrorMsg").textContent = "Veuillez remplir cette zone sans chiffres ni caractères spéciaux.";}
     function prenomControle() {
       const lePrenom = formulaire.prenom;
-      if (/^[A-Za-z]{3,20}$/.test(lePrenom)) {
+      if (/^([A-Za-z]{3,20})?([-]{0,1})?([A-Za-z]{3,20})$/.test(lePrenom)) {
         document.querySelector("#firstNameErrorMsg").textContent = "";
         return true;
 
@@ -194,7 +194,7 @@ function recuperationInformationFormulaire() {
 
     function villeControle() {
       const laVille = formulaire.ville;
-      if (/^[A-Za-z]{3,20}$/.test(laVille)) {
+      if (/^([A-Za-z]{3,20})?([-]{0,1})?([A-Za-z]{3,20})$/.test(laVille)) {
         document.querySelector("#cityErrorMsg").textContent = "";
         return true;
 
@@ -235,7 +235,7 @@ function recuperationInformationFormulaire() {
       alert("attention")
     }
 
-
+    let produitEnregistre = JSON.parse(localStorage.getItem("panier"));
     const aEnvoyerServeur = {
       produitEnregistre,
       formulaire,
