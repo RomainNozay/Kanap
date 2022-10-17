@@ -27,8 +27,9 @@ async function AffichagePanier() {
   //console.log(produitEnregistre);
 
   for (k = 0; k < produitEnregistre.length; k++) {
-    const product = await getProductById(produitEnregistre[k]._id);
-    //console.log(product.price);
+    var product = await getProductById(produitEnregistre[k]._id);
+    var TotalChaqueLigne = produitEnregistre[k].option_Quantite * product.price;
+    //console.log(TotalChaqueLigne);
     structurePanier = structurePanier +
       `
     <article class="cart__item" data-id="${produitEnregistre[k]._id}" data-color="${produitEnregistre[k].option_Couleur}">
@@ -60,14 +61,15 @@ async function AffichagePanier() {
     let listeSousTotaux = [];
 
     //for (i = 0; i < produitEnregistre.length; i++) {
-      let QuantiteChaquePanier = produitEnregistre[k].option_Quantite;
+      //let QuantiteChaquePanier = produitEnregistre[k].option_Quantite;
       
-      let PrixChaquePanier = product.price;
-      const PrixChaquePanierNombre = parseInt(PrixChaquePanier);
-      let TotalChaqueLigne = QuantiteChaquePanier * PrixChaquePanierNombre;
-      
+      //let PrixChaquePanier = product.price;
+      //const PrixChaquePanierNombre = parseInt(PrixChaquePanier);
+      //let TotalChaqueLigne = QuantiteChaquePanier * PrixChaquePanierNombre;
       listeSousTotaux.push(TotalChaqueLigne);
+      console.log(TotalChaqueLigne);
       console.log(listeSousTotaux);
+      
     //}
 
     const reducers = (accumulator, prix) => accumulator + prix;
@@ -78,6 +80,7 @@ async function AffichagePanier() {
     positionPrixTotal.innerHTML = structurePrixTotal;
   }
   /////////////////////////////////////////////////////////////////////////////////////////
+  function quantiteTotale() {
   let listeQuantitePanier = [];
 
   for (i = 0; i < produitEnregistre.length; i++) {
@@ -95,7 +98,7 @@ console.log(QuantiteChaquePanier);
   const positionQuantite = document.querySelector("#totalQuantity");
   const structureQuantitePanier = quantiteTotal;
   positionQuantite.innerHTML = structureQuantitePanier;
-
+  }
   ///////////////////////////////////////////////////////////////////////////////////////////
 
   function ModificationQuantiteProduit() {
@@ -148,6 +151,7 @@ console.log(QuantiteChaquePanier);
       })
     }
   }
+  quantiteTotale();
   ModificationQuantiteProduit();
   SuppressionArticle();
 
@@ -254,5 +258,6 @@ function remplissageFormulaireLocalStorage() {
 }
 
 AffichagePanier();
+
 recuperationInformationFormulaire();
 remplissageFormulaireLocalStorage();
