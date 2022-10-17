@@ -161,11 +161,12 @@ function recuperationInformationFormulaire() {
   const boutonFormulaire = document.querySelector("#order");
   boutonFormulaire.addEventListener("click", (e) => {
     e.preventDefault();
-    let formulaire = {
-      prenom: document.querySelector("#firstName").value,
-      nom: document.querySelector("#lastName").value,
-      adresse: document.querySelector("#address").value,
-      ville: document.querySelector("#city").value,
+
+    let contact = {
+      firstName: document.querySelector("#firstName").value,
+      lastName: document.querySelector("#lastName").value,
+      address: document.querySelector("#address").value,
+      city: document.querySelector("#city").value,
       email: document.querySelector("#email").value,
     }
     //const regexLettre = (value) => {
@@ -173,7 +174,7 @@ function recuperationInformationFormulaire() {
     //}
     //function texteErreurLettre(){document.querySelector("#firstNameErrorMsg").textContent = "Veuillez remplir cette zone sans chiffres ni caractères spéciaux.";}
     function prenomControle() {
-      const lePrenom = formulaire.prenom;
+      const lePrenom = contact.firstName;
       if (/^([A-Za-z]{3,20})?([-]{0,1})?([A-Za-z]{3,20})$/.test(lePrenom)) {
         document.querySelector("#firstNameErrorMsg").textContent = "";
         return true;
@@ -185,7 +186,7 @@ function recuperationInformationFormulaire() {
     }
 
     function nomControle() {
-      const lenom = formulaire.nom;
+      const lenom = contact.lastName;
       if (/^([A-Za-z]{3,20})?([-]{0,1})?([A-Za-z]{3,20})$/.test(lenom)) {
         document.querySelector("#lastNameErrorMsg").textContent = "";
         return true;
@@ -197,7 +198,7 @@ function recuperationInformationFormulaire() {
     }
 
     function villeControle() {
-      const laVille = formulaire.ville;
+      const laVille = contact.city;
       if (/^([A-Za-z]{3,20})?([-]{0,1})?([A-Za-z]{3,20})$/.test(laVille)) {
         document.querySelector("#cityErrorMsg").textContent = "";
         return true;
@@ -209,7 +210,7 @@ function recuperationInformationFormulaire() {
     }
 
     function adresseControle() {
-      const laAdresse = formulaire.adresse;
+      const laAdresse = contact.address;
       if (/^[A-Za-z0-9\s]{3,100}$/.test(laAdresse)) {
         document.querySelector("#addressErrorMsg").textContent = "";
         return true;
@@ -221,7 +222,7 @@ function recuperationInformationFormulaire() {
     }
 
     function emailControle() {
-      const leEmail = formulaire.email;
+      const leEmail = contact.email;
       if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(leEmail)) {
         document.querySelector("#emailErrorMsg").textContent = "";
         return true;
@@ -234,30 +235,67 @@ function recuperationInformationFormulaire() {
 
 
     if (prenomControle() && nomControle() && villeControle() && adresseControle() && emailControle()) {
-      localStorage.setItem("formulaire", JSON.stringify(formulaire));
+      localStorage.setItem("contact", JSON.stringify(contact));
+
+      //let produitEnregistre = JSON.parse(localStorage.getItem("panier"));
+
+      //const aEnvoyerServeur = {
+        //produitEnregistre,
+        //formulaire,
+      //}
+     
+      envoieAuServeur(contact);
+      
+
+
     } else {
       alert("attention")
     }
 
-    let produitEnregistre = JSON.parse(localStorage.getItem("panier"));
-    const aEnvoyerServeur = {
-      produitEnregistre,
-      formulaire,
+    
+  })
+}
+const products =[];
+
+/* REQUÊTE DU SERVEUR ET POST DES DONNÉES */
+function envoieAuServeur(contact) {
+  
+  const envoieAuServeur = fetch("http://localhost:3000/api/products/order", {
+    method: "POST",
+    body: JSON.stringify({contact, products}),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+  envoieAuServeur.then(async(response)=>{
+    try{
+      console.log(response);
+      const contenu = await response.json();
+      console.log(contenu.orderId);
+      localStorage.setItem("idDeCommande", contenu.orderId);
+      window.location.href = "confirmation.html";
+    }catch(e){
+      console.log(e);
     }
   })
 }
 
-function remplissageFormulaireLocalStorage() {
-  const formulaireEnvoye = JSON.parse(localStorage.getItem("formulaire"));
+    
 
-  document.querySelector("#firstName").value = formulaireEnvoye.prenom;
-  document.querySelector("#lastName").value = formulaireEnvoye.nom;
-  document.querySelector("#address").value = formulaireEnvoye.adresse;
-  document.querySelector("#city").value = formulaireEnvoye.ville;
-  document.querySelector("#email").value = formulaireEnvoye.email;
+
+
+function remplissageFormulaireLocalStorage() {
+  const contact = JSON.parse(localStorage.getItem("contact"));
+
+  document.querySelector("#firstName").value = contact.firstName;
+  document.querySelector("#lastName").value = contact.lastName;
+  document.querySelector("#address").value = contact.address;
+  document.querySelector("#city").value = contact.city;
+  document.querySelector("#email").value = contact.email;
 }
 
-AffichagePanier();
 
+
+AffichagePanier();
 recuperationInformationFormulaire();
 remplissageFormulaireLocalStorage();
