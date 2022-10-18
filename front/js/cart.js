@@ -14,11 +14,6 @@ async function getProductById(productId) {
 }
 
 
-
-
-//let produitEnregistre = JSON.parse(localStorage.getItem("panier"));
-//console.log(produitEnregistre);
-
 async function AffichagePanier() {
   const positionPanier = document.querySelector("#cart__items");
   let structurePanier = [];
@@ -27,8 +22,8 @@ async function AffichagePanier() {
   //console.log(produitEnregistre);
 
   for (k = 0; k < produitEnregistre.length; k++) {
-    var product = await getProductById(produitEnregistre[k]._id);
-    var TotalChaqueLigne = produitEnregistre[k].option_Quantite * product.price;
+    const product = await getProductById(produitEnregistre[k]._id);
+    //var TotalChaqueLigne = produitEnregistre[k].option_Quantite * product.price;
     //console.log(TotalChaqueLigne);
     structurePanier = structurePanier +
       `
@@ -57,20 +52,21 @@ async function AffichagePanier() {
     if (k === produitEnregistre.lenght); {
       positionPanier.innerHTML = structurePanier;
     }
-  
+    function prixTotal() {
     let listeSousTotaux = [];
 
-    //for (i = 0; i < produitEnregistre.length; i++) {
-      //let QuantiteChaquePanier = produitEnregistre[k].option_Quantite;
+    for (i = 0; i < produitEnregistre.length; i++) {
+      let QuantiteChaquePanier = produitEnregistre[i].option_Quantite;
       
-      //let PrixChaquePanier = product.price;
-      //const PrixChaquePanierNombre = parseInt(PrixChaquePanier);
-      //let TotalChaqueLigne = QuantiteChaquePanier * PrixChaquePanierNombre;
+      let PrixChaquePanier = product.price;
+      const PrixChaquePanierNombre = parseInt(PrixChaquePanier);
+      let TotalChaqueLigne = QuantiteChaquePanier * PrixChaquePanierNombre;
       listeSousTotaux.push(TotalChaqueLigne);
       console.log(TotalChaqueLigne);
       console.log(listeSousTotaux);
       
-    //}
+    }
+    
 
     const reducers = (accumulator, prix) => accumulator + prix;
     const prixTotal = listeSousTotaux.reduce(reducers, 0);
@@ -79,6 +75,7 @@ async function AffichagePanier() {
     const structurePrixTotal = prixTotal;
     positionPrixTotal.innerHTML = structurePrixTotal;
   }
+}
   /////////////////////////////////////////////////////////////////////////////////////////
   function quantiteTotale() {
   let listeQuantitePanier = [];
@@ -92,7 +89,7 @@ console.log(QuantiteChaquePanier);
     console.log(listeQuantitePanier);
   }
 
-  const reducer = (accumulator, Quantite) => accumulator + Quantite;
+  const reducer = (accumulator, quantite) => accumulator + quantite;
   const quantiteTotal = listeQuantitePanier.reduce(reducer, 0);
 
   const positionQuantite = document.querySelector("#totalQuantity");
@@ -151,6 +148,7 @@ console.log(QuantiteChaquePanier);
       })
     }
   }
+  prixTotal();
   quantiteTotale();
   ModificationQuantiteProduit();
   SuppressionArticle();
@@ -169,6 +167,7 @@ function recuperationInformationFormulaire() {
       city: document.querySelector("#city").value,
       email: document.querySelector("#email").value,
     }
+
     //const regexLettre = (value) => {
     //return /^[A-Za-z]{3,20}$/.test(value);
     //}
@@ -237,22 +236,11 @@ function recuperationInformationFormulaire() {
     if (prenomControle() && nomControle() && villeControle() && adresseControle() && emailControle()) {
       localStorage.setItem("contact", JSON.stringify(contact));
 
-      //let produitEnregistre = JSON.parse(localStorage.getItem("panier"));
-
-      //const aEnvoyerServeur = {
-        //produitEnregistre,
-        //formulaire,
-      //}
-     
       envoieAuServeur(contact);
-      
-
 
     } else {
       alert("attention")
     }
-
-    
   })
 }
 const products =[];
