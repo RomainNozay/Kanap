@@ -78,8 +78,7 @@ let créationDuLocalStorage = (informations) => {
         nom: informations.name,
       }
 
-      // Ajouter au local storage
-
+      function ajoutAuLocalStorage () {
       let produitEnregistre = JSON.parse(localStorage.getItem("panier"));
 
       if (produitEnregistre === null) {
@@ -99,6 +98,8 @@ let créationDuLocalStorage = (informations) => {
           localStorage.setItem("panier", JSON.stringify(produitEnregistre));
         }
       }
+    }
+    ajoutAuLocalStorage();
     }
   })
 }
