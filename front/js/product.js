@@ -4,7 +4,6 @@ const urlSearchParams = new URLSearchParams(queryString_url_id);
 const id = urlSearchParams.get("id");
 
 // II) Extraction des informations d'un seul produit pour remplir la page.
-
 fetch(`http://localhost:3000/api/products/${id}`)
   .then(function (response) {
     return response.json()
@@ -16,7 +15,6 @@ fetch(`http://localhost:3000/api/products/${id}`)
   })
 
 //Gestion des données pour afficher les éléments sur la page
-
 let affichageDuProduit = (informations) => {
 
   const positionImage = document.querySelector(".item__img ");
@@ -45,8 +43,8 @@ let affichageDuProduit = (informations) => {
   positionTitrePage.innerText = structureTitrePage;
   positionCouleur.innerHTML += structureCouleur;
 }
-// III) Récupération des données sélectionnées par l'utilisateur.
 
+// III) Récupération des données sélectionnées par l'utilisateur.
 const menuCouleur = document.querySelector("#colors");
 const menuQuantite = document.querySelector("#quantity");
 const boutonPanier = document.querySelector("#addToCart");

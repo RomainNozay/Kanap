@@ -13,7 +13,6 @@ async function getProductById(productId) {
     });
 }
 
-
 async function AffichagePanier() {
   const positionPanier = document.querySelector("#cart__items");
   let structurePanier = [];
@@ -92,7 +91,6 @@ console.log(QuantiteChaquePanier);
   positionQuantite.innerHTML = structureQuantitePanier;
   }
   ///////////////////////////////////////////////////////////////////////////////////////////
-
   function ModificationQuantiteProduit() {
     let bouttonQuantitePanier = document.querySelectorAll(".itemQuantity");
     for (l = 0; l < bouttonQuantitePanier.length; l++) {
@@ -121,9 +119,7 @@ console.log(QuantiteChaquePanier);
       })
     }
   }
-
   /////////////////////////////////////////////////////////////////////////////////////  
-
   function SuppressionArticle() {
     let bouttonSupprimer = document.querySelectorAll(".deleteItem");
     for (i = 0; i < bouttonSupprimer.length; i++) {
@@ -228,13 +224,13 @@ function recuperationInformationFormulaire() {
     }
 
 
-    if (prenomControle() && nomControle() && villeControle() && adresseControle() && emailControle()) {
+    if (prenomControle() && nomControle() && adresseControle() && villeControle() && emailControle()) {
       localStorage.setItem("contact", JSON.stringify(contact));
 
       envoieAuServeur(contact);
 
     } else {
-      alert("attention")
+      
     }
   })
 }
