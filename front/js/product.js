@@ -1,10 +1,7 @@
 // I) Récupération de l'id dans L'url.
 const queryString_url_id = window.location.search;
-
 const urlSearchParams = new URLSearchParams(queryString_url_id);
-
 const id = urlSearchParams.get("id");
-
 
 // II) Extraction des informations d'un seul produit pour remplir la page.
 
@@ -29,7 +26,7 @@ let affichageDuProduit = (informations) => {
   const positionTitrePage = document.querySelector("title");
   const positionCouleur = document.querySelector("#colors");
 
-  const structureImage = `<img src=${informations.imageUrl}> `;
+  const structureImage = `<img src=${informations.imageUrl}> <alt =${informations.altTxt}>`;
   const structureTitre = `<h1>${informations.name}</h1>`;
   const structurePrix = `${informations.price}`;
   const structureDescription = `<p>${informations.description}</p>`;
@@ -48,7 +45,6 @@ let affichageDuProduit = (informations) => {
   positionTitrePage.innerText = structureTitrePage;
   positionCouleur.innerHTML += structureCouleur;
 }
-
 // III) Récupération des données sélectionnées par l'utilisateur.
 
 const menuCouleur = document.querySelector("#colors");

@@ -19,12 +19,9 @@ async function AffichagePanier() {
   let structurePanier = [];
 
   let produitEnregistre = JSON.parse(localStorage.getItem("panier"));
-  //console.log(produitEnregistre);
 
   for (k = 0; k < produitEnregistre.length; k++) {
     const product = await getProductById(produitEnregistre[k]._id);
-    //var TotalChaqueLigne = produitEnregistre[k].option_Quantite * product.price;
-    //console.log(TotalChaqueLigne);
     structurePanier = structurePanier +
       `
     <article class="cart__item" data-id="${produitEnregistre[k]._id}" data-color="${produitEnregistre[k].option_Couleur}">
@@ -64,10 +61,8 @@ async function AffichagePanier() {
       listeSousTotaux.push(TotalChaqueLigne);
       console.log(TotalChaqueLigne);
       console.log(listeSousTotaux);
-      
     }
     
-
     const reducers = (accumulator, prix) => accumulator + prix;
     const prixTotal = listeSousTotaux.reduce(reducers, 0);
 
@@ -148,11 +143,11 @@ console.log(QuantiteChaquePanier);
       })
     }
   }
+
   prixTotal();
   quantiteTotale();
   ModificationQuantiteProduit();
   SuppressionArticle();
-
 }
 
 function recuperationInformationFormulaire() {
@@ -268,10 +263,6 @@ function envoieAuServeur(contact) {
   })
 }
 
-    
-
-
-
 function remplissageFormulaireLocalStorage() {
   const contact = JSON.parse(localStorage.getItem("contact"));
 
@@ -281,8 +272,6 @@ function remplissageFormulaireLocalStorage() {
   document.querySelector("#city").value = contact.city;
   document.querySelector("#email").value = contact.email;
 }
-
-
 
 AffichagePanier();
 recuperationInformationFormulaire();

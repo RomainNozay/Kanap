@@ -1,5 +1,3 @@
-
-
 // Récupération des données de tout les canapés depuis l'API. (explication de fetch avec get)
 
 fetch("http://localhost:3000/api/products")
@@ -12,11 +10,9 @@ fetch("http://localhost:3000/api/products")
   //Création d'une liste de produit depuis L'API
   .then(function (products) {
 
-
     // Génération de contenu afin de remplir automatiquement les "card" destinés à recevoir les canapés, à partir de la fonction products qui fourni les informations.
     for (let product of products) {
       let i = 0; i < product.length; i++;
-      console.log(product.price);
       document.getElementById("items").innerHTML +=
 
         `<a href="./product.html?id=${product._id}">                                              
@@ -28,7 +24,6 @@ fetch("http://localhost:3000/api/products")
             </a>`
     }
   })
-
 
   // En cas d'échec de récupération des données de l'Api
   .catch(function (error) {
