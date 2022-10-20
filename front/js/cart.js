@@ -66,9 +66,10 @@ async function AffichagePanier() {
 
   for (i = 0; i < produitEnregistre.length; i++) {
     let QuantiteChaquePanier = produitEnregistre[i].option_Quantite;
-console.log(typeof QuantiteChaquePanier);
+    let quantiteNombre = parseInt (QuantiteChaquePanier);
+    console.log(typeof quantiteNombre);
 
-    listeQuantitePanier.push(QuantiteChaquePanier);
+    listeQuantitePanier.push(quantiteNombre);
     console.log(listeQuantitePanier);
   }
 
