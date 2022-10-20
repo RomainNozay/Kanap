@@ -64,9 +64,7 @@ let créationDuLocalStorage = (informations) => {
       (window.alert(` Veuillez sélectionner le nombre de ${informations.name} souhaités`));
       window.location.href = "#quantity";
     } else {
-      (window.confirm(` Nous avons bien ajouté ${menuQuantite.value} ${informations.name}, couleur: "${menuCouleur.value}" à votre panier.
-  Consultez le panier: OK ou Continuer votre shopping: ANNULER`))
-      //window.location.href = "cart.html";
+      (window.alert(` Nous avons bien ajouté ${menuQuantite.value} ${informations.name}, couleur: "${menuCouleur.value}" à votre panier.`))
 
       let ChoixUtilisateur = {
         _id: id,

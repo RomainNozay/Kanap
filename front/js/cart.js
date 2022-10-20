@@ -48,38 +48,27 @@ async function AffichagePanier() {
     if (k === produitEnregistre.lenght); {
       positionPanier.innerHTML = structurePanier;
     }
-    function prixTotal() {
-    let listeSousTotaux = [];
-
-    for (i = 0; i < produitEnregistre.length; i++) {
-      let QuantiteChaquePanier = produitEnregistre[i].option_Quantite;
-      
-      let PrixChaquePanier = product.price;
-      const PrixChaquePanierNombre = parseInt(PrixChaquePanier);
-      let TotalChaqueLigne = QuantiteChaquePanier * PrixChaquePanierNombre;
-      listeSousTotaux.push(TotalChaqueLigne);
-      console.log(TotalChaqueLigne);
-      console.log(listeSousTotaux);
+  
+      totalPrix = 0;
+  for (i = 0; i < produitEnregistre.length; i++) {
+    let article = await getProductById(produitEnregistre[i]._id);
+    totalPrix += produitEnregistre[i].option_Quantite * article.price;
     }
-    
-    const reducers = (accumulator, prix) => accumulator + prix;
-    const prixTotal = listeSousTotaux.reduce(reducers, 0);
 
     const positionPrixTotal = document.querySelector("#totalPrice");
-    const structurePrixTotal = prixTotal;
+    const structurePrixTotal = totalPrix;
     positionPrixTotal.innerHTML = structurePrixTotal;
-  }
-}
+  
+
   /////////////////////////////////////////////////////////////////////////////////////////
   function quantiteTotale() {
   let listeQuantitePanier = [];
 
   for (i = 0; i < produitEnregistre.length; i++) {
     let QuantiteChaquePanier = produitEnregistre[i].option_Quantite;
-console.log(QuantiteChaquePanier);
-    const QuantiteNombre = parseInt(QuantiteChaquePanier);
+console.log(typeof QuantiteChaquePanier);
 
-    listeQuantitePanier.push(QuantiteNombre);
+    listeQuantitePanier.push(QuantiteChaquePanier);
     console.log(listeQuantitePanier);
   }
 
@@ -90,6 +79,7 @@ console.log(QuantiteChaquePanier);
   const structureQuantitePanier = quantiteTotal;
   positionQuantite.innerHTML = structureQuantitePanier;
   }
+
   ///////////////////////////////////////////////////////////////////////////////////////////
   function ModificationQuantiteProduit() {
     let bouttonQuantitePanier = document.querySelectorAll(".itemQuantity");
@@ -139,8 +129,7 @@ console.log(QuantiteChaquePanier);
       })
     }
   }
-
-  prixTotal();
+  }
   quantiteTotale();
   ModificationQuantiteProduit();
   SuppressionArticle();
@@ -236,7 +225,6 @@ function recuperationInformationFormulaire() {
 }
 const products =[];
 
-/* REQUÊTE DU SERVEUR ET POST DES DONNÉES */
 function envoieAuServeur(contact) {
   
   const envoieAuServeur = fetch("http://localhost:3000/api/products/order", {
