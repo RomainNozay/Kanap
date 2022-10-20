@@ -5,9 +5,9 @@ positionIdCommande = document.querySelector("#orderId");
 structureIdCommande = idCommande;
 positionIdCommande.innerHTML = structureIdCommande;
 
-function enleverCléLocalStorage(cle){
+function enleverCleLocalStorage(cle){
     localStorage.removeItem(cle);
 };
 
-enleverCléLocalStorage("panier");
-enleverCléLocalStorage("idDeCommande");
+enleverCleLocalStorage("panier");
+enleverCleLocalStorage("idDeCommande");
