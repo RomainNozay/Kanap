@@ -249,13 +249,20 @@ function envoieAuServeur(contact) {
 }
 
 function remplissageFormulaireLocalStorage() {
+
+
   const contact = JSON.parse(localStorage.getItem("contact"));
+  if(contact === null){
+    console.log("prout");
+
+  }else{
 
   document.querySelector("#firstName").value = contact.firstName;
   document.querySelector("#lastName").value = contact.lastName;
   document.querySelector("#address").value = contact.address;
   document.querySelector("#city").value = contact.city;
   document.querySelector("#email").value = contact.email;
+  }
 }
 
 AffichagePanier();
