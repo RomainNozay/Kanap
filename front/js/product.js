@@ -11,7 +11,6 @@ fetch(`http://localhost:3000/api/products/${id}`)
   .then(function (informations) {
     affichageDuProduit(informations);
     créationDuLocalStorage(informations);
-    //console.log(informations);
   })
 
 //Gestion des données pour afficher les éléments sur la page
@@ -58,13 +57,10 @@ let créationDuLocalStorage = (informations) => {
     const choixQuantiteNombre = parseInt(choixQuantite);
 
     if (menuCouleur.value == false) {
-      (window.alert(`Veuillez sélectionner une couleur pour votre ${informations.name}`));
       window.location.href = "#colors";
     } else if (menuQuantite.value == 0) {
-      (window.alert(` Veuillez sélectionner le nombre de ${informations.name} souhaités`));
       window.location.href = "#quantity";
     } else {
-      (window.alert(` Nous avons bien ajouté ${menuQuantite.value} ${informations.name}, couleur: "${menuCouleur.value}" à votre panier.`))
 
       let ChoixUtilisateur = {
         _id: id,
@@ -74,28 +70,26 @@ let créationDuLocalStorage = (informations) => {
         nom: informations.name,
       }
 
-      function ajoutAuLocalStorage () {
-      let produitEnregistre = JSON.parse(localStorage.getItem("panier"));
+      function ajoutAuLocalStorage() {
+        let produitEnregistre = JSON.parse(localStorage.getItem("panier"));
 
-      if (produitEnregistre === null) {
-        produitEnregistre = [];
-        produitEnregistre.push(ChoixUtilisateur);
-        localStorage.setItem("panier", JSON.stringify(produitEnregistre));
-      }
-      else {
-        const optionTrouver = produitEnregistre.find(element => element._id == ChoixUtilisateur._id && element.option_Couleur == ChoixUtilisateur.option_Couleur);
-        console.log(optionTrouver);
-        if (optionTrouver == undefined) {
-          console.log(optionTrouver)
+        if (produitEnregistre === null) {
+          produitEnregistre = [];
           produitEnregistre.push(ChoixUtilisateur);
           localStorage.setItem("panier", JSON.stringify(produitEnregistre));
-        } else {
-          optionTrouver.option_Quantite = optionTrouver.option_Quantite + ChoixUtilisateur.option_Quantite;
-          localStorage.setItem("panier", JSON.stringify(produitEnregistre));
+        }
+        else {
+          const optionTrouver = produitEnregistre.find(element => element._id == ChoixUtilisateur._id && element.option_Couleur == ChoixUtilisateur.option_Couleur);
+          if (optionTrouver == undefined) {
+            produitEnregistre.push(ChoixUtilisateur);
+            localStorage.setItem("panier", JSON.stringify(produitEnregistre));
+          } else {
+            optionTrouver.option_Quantite = optionTrouver.option_Quantite + ChoixUtilisateur.option_Quantite;
+            localStorage.setItem("panier", JSON.stringify(produitEnregistre));
+          }
         }
       }
-    }
-    ajoutAuLocalStorage();
+      ajoutAuLocalStorage();
     }
   })
 }
