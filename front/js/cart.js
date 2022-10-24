@@ -126,7 +126,6 @@ async function AffichagePanier() {
       }
     }
   }
-
   totaleQuantite();
   ModificationQuantiteProduit();
   SuppressionArticle();
