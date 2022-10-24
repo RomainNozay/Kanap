@@ -52,9 +52,9 @@ async function AffichagePanier() {
     if (k === produitEnregistre.lenght); {
       positionPanier.innerHTML = structurePanier;
     }
-//////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////
     totalPrix = 0;
-        for (i = 0; i < produitEnregistre.length; i++) {
+    for (i = 0; i < produitEnregistre.length; i++) {
       let article = await getProductById(produitEnregistre[i]._id);
       totalPrix += produitEnregistre[i].option_Quantite * article.price;
     }
@@ -62,7 +62,7 @@ async function AffichagePanier() {
     const positionPrixTotal = document.querySelector("#totalPrice");
     const structurePrixTotal = totalPrix;
     positionPrixTotal.innerHTML = structurePrixTotal;
-////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
     function totaleQuantite() {
       let listeQuantitePanier = [];
 
@@ -80,7 +80,7 @@ async function AffichagePanier() {
       const structureQuantitePanier = quantiteTotal;
       positionQuantite.innerHTML = structureQuantitePanier;
     }
-/////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////
     function ModificationQuantiteProduit() {
       let bouttonQuantitePanier = document.querySelectorAll(".itemQuantity");
       for (l = 0; l < bouttonQuantitePanier.length; l++) {
@@ -105,7 +105,7 @@ async function AffichagePanier() {
         })
       }
     }
-///////////////////////////////////////////////////////////////////////////////////////////  
+    ///////////////////////////////////////////////////////////////////////////////////////////  
     function SuppressionArticle() {
       let bouttonSupprimer = document.querySelectorAll(".deleteItem");
       for (i = 0; i < bouttonSupprimer.length; i++) {
@@ -145,7 +145,7 @@ function recuperationInformationFormulaire() {
     }
 
     const regexLettre = (value) => {
-    return /^([A-Za-z]{3,20})?([-]{0,1})?([A-Za-z]{3,20})$/.test(value);
+      return /^([A-Za-z]{3,20})?([-]{0,1})?([A-Za-z]{3,20})$/.test(value);
     }
     const messageErreur = "veuillez remplir cette zone, merci."
 
@@ -213,7 +213,7 @@ function recuperationInformationFormulaire() {
 
       envoieAuServeur(contact);
 
-    } else {}
+    } else { }
   })
 }
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -248,8 +248,8 @@ function remplissageFormulaireLocalStorage() {
     document.querySelector("#address").value = contact.address;
     document.querySelector("#city").value = contact.city;
     document.querySelector("#email").value = contact.email;
- 
-}
+
+  }
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 AffichagePanier();
