@@ -147,7 +147,7 @@ function recuperationInformationFormulaire() {
     const regexLettre = (value) => {
       return /^([A-Za-z]{3,20})?([-]{0,1})?([A-Za-z]{3,20})$/.test(value);
     }
-    const messageErreur = "veuillez remplir cette zone, merci."
+    const messageErreur = "Veuillez remplir cette zone, merci."
 
     function prenomControle() {
       const lePrenom = contact.firstName;

@@ -12,7 +12,7 @@ fetch(`http://localhost:3000/api/products/${id}`)
     affichageDuProduit(informations);
     créationDuLocalStorage(informations);
   })
-
+  
 //Gestion des données pour afficher les éléments sur la page
 let affichageDuProduit = (informations) => {
 
