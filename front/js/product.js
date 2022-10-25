@@ -72,20 +72,22 @@ let créationDuLocalStorage = (informations) => {
 
       function ajoutAuLocalStorage() {
         let produitEnregistre = JSON.parse(localStorage.getItem("panier"));
-
+        const enregistrementLocalStorage = (value) => {
+          return localStorage.setItem("panier", JSON.stringify(produitEnregistre));;
+        }
         if (produitEnregistre === null) {
           produitEnregistre = [];
           produitEnregistre.push(ChoixUtilisateur);
-          localStorage.setItem("panier", JSON.stringify(produitEnregistre));
+          enregistrementLocalStorage();
         }
         else {
           const optionTrouver = produitEnregistre.find(element => element._id == ChoixUtilisateur._id && element.option_Couleur == ChoixUtilisateur.option_Couleur);
           if (optionTrouver == undefined) {
             produitEnregistre.push(ChoixUtilisateur);
-            localStorage.setItem("panier", JSON.stringify(produitEnregistre));
+            enregistrementLocalStorage();
           } else {
             optionTrouver.option_Quantite = optionTrouver.option_Quantite + ChoixUtilisateur.option_Quantite;
-            localStorage.setItem("panier", JSON.stringify(produitEnregistre));
+            enregistrementLocalStorage();
           }
         }
       }
