@@ -1,10 +1,10 @@
 // I) Récupération de l'id dans L'url.
 const queryString_url_id = window.location.search;
 const urlSearchParams = new URLSearchParams(queryString_url_id);
-const id = urlSearchParams.get("id");
+const idProduit = urlSearchParams.get("id");
 
 // II) Extraction des informations d'un seul produit pour remplir la page.
-fetch(`http://localhost:3000/api/products/${id}`)
+fetch(`http://localhost:3000/api/products/${idProduit}`)
   .then(function (response) {
     return response.json()
   })
@@ -63,7 +63,7 @@ let créationDuLocalStorage = (informations) => {
     } else {
 
       let ChoixUtilisateur = {
-        _id: id,
+        _id: idProduit,
         image: informations.imageUrl,
         option_Couleur: choixCouleur,
         option_Quantite: choixQuantiteNombre,
