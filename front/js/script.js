@@ -1,4 +1,4 @@
-function formeDeIndex(_id, imageUrl, altTxt, name, description) {
+function carteDeCanape(_id, imageUrl, altTxt, name, description) {
   document.getElementById("items").innerHTML +=
     `<a href="./product.html?id=${_id}">                                              
       <article>
@@ -19,7 +19,7 @@ fetch("http://localhost:3000/api/products")
   })
   .then(function (products) {
     for (let product of products) {
-      formeDeIndex(product._id, product.imageUrl, product.altTxt, product.name, product.description);
+      carteDeCanape(product._id, product.imageUrl, product.altTxt, product.name, product.description);
     }
   })
   .catch(function (error) {
