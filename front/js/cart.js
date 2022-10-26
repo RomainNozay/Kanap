@@ -1,3 +1,30 @@
+function ligneDuPanier(_id, option_Couleur, image, nom, price, option_Quantite) {
+  document.getElementById('cart__items').innerHTML +=
+    `
+  <article class="cart__item" data-id="${_id}" data-color="${option_Couleur}">
+              <div class="cart__item__img">
+                <img src="${image}" alt="Photographie d'un canapé">
+              </div>
+              <div class="cart__item__content">
+                <div class="cart__item__content__description">
+                  <h2>${nom}</h2>
+                  <p>${option_Couleur}</p>
+                  <p>${price} €</p>
+                </div>
+                <div class="cart__item__content__settings">
+                  <div class="cart__item__content__settings__quantity">
+                    <p>Qté :  </p>
+                    <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" canapeId="${_id}" canapeCouleur="${option_Couleur}" value="${option_Quantite}">
+                  </div>
+                  <div class="cart__item__content__settings__delete">
+                    <p class="deleteItem" canapeId="${_id}" canapeCouleur="${option_Couleur}" >Supprimer</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+              `;
+}
+
 // Récupération des produits de l'API
 async function getProductById(productId) {
   return fetch("http://localhost:3000/api/products/" + productId)
@@ -14,44 +41,16 @@ async function getProductById(productId) {
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////
 async function AffichagePanier() {
+
+
   let produitEnregistre = JSON.parse(localStorage.getItem("panier"));
-  const positionPanier = document.querySelector("#cart__items");
-  let structurePanier = [];
-
-
   for (k = 0; k < produitEnregistre.length; k++) {
-    const product = await getProductById(produitEnregistre[k]._id);
-    function formeDuPanier() {
-      structurePanier = structurePanier +
-        `
-      <article class="cart__item" data-id="${produitEnregistre[k]._id}" data-color="${produitEnregistre[k].option_Couleur}">
-                  <div class="cart__item__img">
-                    <img src="${produitEnregistre[k].image}" alt="Photographie d'un canapé">
-                  </div>
-                  <div class="cart__item__content">
-                    <div class="cart__item__content__description">
-                      <h2>${produitEnregistre[k].nom}</h2>
-                      <p>${produitEnregistre[k].option_Couleur}</p>
-                      <p>${product.price} €</p>
-                    </div>
-                    <div class="cart__item__content__settings">
-                      <div class="cart__item__content__settings__quantity">
-                        <p>Qté :  </p>
-                        <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" canapeId="${produitEnregistre[k]._id}" canapeCouleur="${produitEnregistre[k].option_Couleur}" value="${produitEnregistre[k].option_Quantite}">
-                      </div>
-                      <div class="cart__item__content__settings__delete">
-                        <p class="deleteItem" canapeId="${produitEnregistre[k]._id}" canapeCouleur="${produitEnregistre[k].option_Couleur}" >Supprimer</p>
-                      </div>
-                    </div>
-                  </div>
-                </article>
-                  `
-    }
-    formeDuPanier();
 
-    if (k === produitEnregistre.lenght); {
-      positionPanier.innerHTML = structurePanier;
-    }
+    const product = await getProductById(produitEnregistre[k]._id);
+
+    ligneDuPanier(produitEnregistre[k]._id, produitEnregistre[k].option_Couleur, produitEnregistre[k].image, produitEnregistre[k].nom
+      , product.price, produitEnregistre[k].option_Quantite);
+
     //////////////////////////////////////////////////////////////////////////////////////////////
     totalPrix = 0;
     for (i = 0; i < produitEnregistre.length; i++) {
