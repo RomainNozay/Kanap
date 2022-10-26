@@ -42,25 +42,18 @@ async function getProductById(productId) {
 /////////////////////////////////////////////////////////////////////////////////////////////////
 async function AffichagePanier() {
 
-
   let produitEnregistre = JSON.parse(localStorage.getItem("panier"));
   for (k = 0; k < produitEnregistre.length; k++) {
-
     const product = await getProductById(produitEnregistre[k]._id);
-
     ligneDuPanier(produitEnregistre[k]._id, produitEnregistre[k].option_Couleur, produitEnregistre[k].image, produitEnregistre[k].nom
       , product.price, produitEnregistre[k].option_Quantite);
-
     //////////////////////////////////////////////////////////////////////////////////////////////
     totalPrix = 0;
     for (i = 0; i < produitEnregistre.length; i++) {
       let article = await getProductById(produitEnregistre[i]._id);
       totalPrix += produitEnregistre[i].option_Quantite * article.price;
     }
-
-    const positionPrixTotal = document.querySelector("#totalPrice");
-    const structurePrixTotal = totalPrix;
-    positionPrixTotal.innerHTML = structurePrixTotal;
+    document.getElementById('totalPrice').innerText = totalPrix;
     ////////////////////////////////////////////////////////////////////////////////////////////
     function totaleQuantite() {
       let listeQuantitePanier = [];
@@ -75,9 +68,7 @@ async function AffichagePanier() {
       const reducer = (accumulator, quantite) => accumulator + quantite;
       const quantiteTotal = listeQuantitePanier.reduce(reducer, 0);
 
-      const positionQuantite = document.querySelector("#totalQuantity");
-      const structureQuantitePanier = quantiteTotal;
-      positionQuantite.innerHTML = structureQuantitePanier;
+      document.getElementById('totalQuantity').innerText = quantiteTotal;
     }
     /////////////////////////////////////////////////////////////////////////////////////////////
     function ModificationQuantiteProduit() {
