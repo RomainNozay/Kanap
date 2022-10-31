@@ -1,9 +1,9 @@
-function ligneDuPanier(_id, option_Couleur, image, nom, price, option_Quantite) {
+function ligneDuPanier(_id, option_Couleur, image, altText, nom, price, option_Quantite) {
   document.getElementById('cart__items').innerHTML +=
     `
   <article class="cart__item" data-id="${_id}" data-color="${option_Couleur}">
               <div class="cart__item__img">
-                <img src="${image}" alt="Photographie d'un canapé">
+                <img src="${image}" alt="${altText}">
               </div>
               <div class="cart__item__content">
                 <div class="cart__item__content__description">
@@ -45,7 +45,7 @@ async function AffichagePanier() {
   let produitEnregistre = JSON.parse(localStorage.getItem("panier"));
   for (k = 0; k < produitEnregistre.length; k++) {
     const product = await getProductById(produitEnregistre[k]._id);
-    ligneDuPanier(produitEnregistre[k]._id, produitEnregistre[k].option_Couleur, produitEnregistre[k].image, produitEnregistre[k].nom
+    ligneDuPanier(produitEnregistre[k]._id, produitEnregistre[k].option_Couleur, produitEnregistre[k].image, product.altText, produitEnregistre[k].nom
       , product.price, produitEnregistre[k].option_Quantite);
     //////////////////////////////////////////////////////////////////////////////////////////////
     totalPrix = 0;
