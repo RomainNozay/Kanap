@@ -1,13 +1,13 @@
-function ligneDuPanier(_id, option_Couleur, image, altText, nom, price, option_Quantite) {
+function ligneDuPanier(_id, option_Couleur, imageUrl, altText, name, price, option_Quantite) {
   document.getElementById('cart__items').innerHTML +=
     `
   <article class="cart__item" data-id="${_id}" data-color="${option_Couleur}">
               <div class="cart__item__img">
-                <img src="${image}" alt="${altText}">
+                <img src="${imageUrl}" alt="${altText}">
               </div>
               <div class="cart__item__content">
                 <div class="cart__item__content__description">
-                  <h2>${nom}</h2>
+                  <h2>${name}</h2>
                   <p>${option_Couleur}</p>
                   <p>${price} €</p>
                 </div>
@@ -40,12 +40,12 @@ async function getProductById(productId) {
     });
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////
-async function AffichagePanier() {
+async function affichagePanier() {
 
   let produitEnregistre = JSON.parse(localStorage.getItem("panier"));
   for (k = 0; k < produitEnregistre.length; k++) {
     const product = await getProductById(produitEnregistre[k]._id);
-    ligneDuPanier(produitEnregistre[k]._id, produitEnregistre[k].option_Couleur, produitEnregistre[k].image, product.altText, produitEnregistre[k].nom
+    ligneDuPanier(produitEnregistre[k]._id, produitEnregistre[k].option_Couleur, product.imageUrl, product.altText, product.name
       , product.price, produitEnregistre[k].option_Quantite);
     //////////////////////////////////////////////////////////////////////////////////////////////
     totalPrix = 0;
@@ -59,8 +59,8 @@ async function AffichagePanier() {
       let listeQuantitePanier = [];
 
       for (i = 0; i < produitEnregistre.length; i++) {
-        let QuantiteChaquePanier = produitEnregistre[i].option_Quantite;
-        let quantiteNombre = parseInt(QuantiteChaquePanier);
+        let quantiteChaquePanier = produitEnregistre[i].option_Quantite;
+        let quantiteNombre = parseInt(quantiteChaquePanier);
 
         listeQuantitePanier.push(quantiteNombre);
       }
@@ -71,7 +71,7 @@ async function AffichagePanier() {
       document.getElementById('totalQuantity').innerText = quantiteTotal;
     }
     /////////////////////////////////////////////////////////////////////////////////////////////
-    function ModificationQuantiteProduit() {
+    function modificationQuantiteProduit() {
       let bouttonQuantitePanier = document.querySelectorAll(".itemQuantity");
       for (l = 0; l < bouttonQuantitePanier.length; l++) {
 
@@ -96,7 +96,7 @@ async function AffichagePanier() {
       }
     }
     ///////////////////////////////////////////////////////////////////////////////////////////  
-    function SuppressionArticle() {
+    function suppressionArticle() {
       let bouttonSupprimer = document.querySelectorAll(".deleteItem");
       for (i = 0; i < bouttonSupprimer.length; i++) {
 
@@ -117,8 +117,8 @@ async function AffichagePanier() {
     }
   }
   totaleQuantite();
-  ModificationQuantiteProduit();
-  SuppressionArticle();
+  modificationQuantiteProduit();
+  suppressionArticle();
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////
 function recuperationInformationFormulaire() {
@@ -208,7 +208,8 @@ function recuperationInformationFormulaire() {
 }
 ////////////////////////////////////////////////////////////////////////////////////////////
 function envoieAuServeur(contact) {
-  const products = [];
+  let produitEnregistre = JSON.parse(localStorage.getItem("panier"));
+  const products = produitEnregistre.map(product => product._id);
   const envoieAuServeur = fetch("http://localhost:3000/api/products/order", {
     method: "POST",
     body: JSON.stringify({ contact, products }),
@@ -242,6 +243,6 @@ function remplissageFormulaireLocalStorage() {
   }
 }
 /////////////////////////////////////////////////////////////////////////////////////////
-AffichagePanier();
+affichagePanier();
 recuperationInformationFormulaire();
 remplissageFormulaireLocalStorage();

@@ -62,12 +62,10 @@ let créationDuLocalStorage = (informations) => {
       window.location.href = "#quantity";
     } else {
 
-      let ChoixUtilisateur = {
+      let choixUtilisateur = {
         _id: idProduit,
-        image: informations.imageUrl,
         option_Couleur: choixCouleur,
         option_Quantite: choixQuantiteNombre,
-        nom: informations.name,
       }
 
       function ajoutAuLocalStorage() {
@@ -77,13 +75,13 @@ let créationDuLocalStorage = (informations) => {
         }
         if (produitEnregistre === null) {
           produitEnregistre = [];
-          produitEnregistre.push(ChoixUtilisateur);
+          produitEnregistre.push(choixUtilisateur);
           enregistrementLocalStorage();
         }
         else {
-          const optionTrouver = produitEnregistre.find(element => element._id == ChoixUtilisateur._id && element.option_Couleur == ChoixUtilisateur.option_Couleur);
+          const optionTrouver = produitEnregistre.find(element => element._id == choixUtilisateur._id && element.option_Couleur == choixUtilisateur.option_Couleur);
           if (optionTrouver == undefined) {
-            produitEnregistre.push(ChoixUtilisateur);
+            produitEnregistre.push(choixUtilisateur);
             enregistrementLocalStorage();
           } else {
             optionTrouver.option_Quantite = optionTrouver.option_Quantite + ChoixUtilisateur.option_Quantite;
