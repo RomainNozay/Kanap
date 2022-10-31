@@ -64,10 +64,10 @@ let créationDuLocalStorage = (informations) => {
 
       let ChoixUtilisateur = {
         _id: idProduit,
-        image: informations.imageUrl,
+        //image: informations.imageUrl,
         option_Couleur: choixCouleur,
         option_Quantite: choixQuantiteNombre,
-        nom: informations.name,
+        //nom: informations.name,
       }
 
       function ajoutAuLocalStorage() {
