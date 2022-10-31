@@ -40,7 +40,7 @@ async function getProductById(productId) {
     });
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////
-async function AffichagePanier() {
+async function affichagePanier() {
 
   let produitEnregistre = JSON.parse(localStorage.getItem("panier"));
   for (k = 0; k < produitEnregistre.length; k++) {
@@ -59,8 +59,8 @@ async function AffichagePanier() {
       let listeQuantitePanier = [];
 
       for (i = 0; i < produitEnregistre.length; i++) {
-        let QuantiteChaquePanier = produitEnregistre[i].option_Quantite;
-        let quantiteNombre = parseInt(QuantiteChaquePanier);
+        let quantiteChaquePanier = produitEnregistre[i].option_Quantite;
+        let quantiteNombre = parseInt(quantiteChaquePanier);
 
         listeQuantitePanier.push(quantiteNombre);
       }
@@ -71,7 +71,7 @@ async function AffichagePanier() {
       document.getElementById('totalQuantity').innerText = quantiteTotal;
     }
     /////////////////////////////////////////////////////////////////////////////////////////////
-    function ModificationQuantiteProduit() {
+    function modificationQuantiteProduit() {
       let bouttonQuantitePanier = document.querySelectorAll(".itemQuantity");
       for (l = 0; l < bouttonQuantitePanier.length; l++) {
 
@@ -96,7 +96,7 @@ async function AffichagePanier() {
       }
     }
     ///////////////////////////////////////////////////////////////////////////////////////////  
-    function SuppressionArticle() {
+    function suppressionArticle() {
       let bouttonSupprimer = document.querySelectorAll(".deleteItem");
       for (i = 0; i < bouttonSupprimer.length; i++) {
 
@@ -117,8 +117,8 @@ async function AffichagePanier() {
     }
   }
   totaleQuantite();
-  ModificationQuantiteProduit();
-  SuppressionArticle();
+  modificationQuantiteProduit();
+  suppressionArticle();
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////
 function recuperationInformationFormulaire() {
@@ -208,7 +208,8 @@ function recuperationInformationFormulaire() {
 }
 ////////////////////////////////////////////////////////////////////////////////////////////
 function envoieAuServeur(contact) {
-  const products = [];
+  let produitEnregistre = JSON.parse(localStorage.getItem("panier"));
+  const products = produitEnregistre.map(product => product._id);
   const envoieAuServeur = fetch("http://localhost:3000/api/products/order", {
     method: "POST",
     body: JSON.stringify({ contact, products }),
@@ -242,6 +243,6 @@ function remplissageFormulaireLocalStorage() {
   }
 }
 /////////////////////////////////////////////////////////////////////////////////////////
-AffichagePanier();
+affichagePanier();
 recuperationInformationFormulaire();
 remplissageFormulaireLocalStorage();
